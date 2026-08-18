@@ -1,0 +1,8 @@
+# Place this at the ROOT of the ubhudia.github.io repo, not in /portfolio/.
+# robots.txt is only read from the domain root.
+User-agent: *
+Allow: /
+
+# AI answer engines are deliberately allowed. The FAQ and schema markup
+# on the portfolio page exist to be cited by them.
+Sitemap: https://ubhudia.github.io/portfolio/sitemap.xml
