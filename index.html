@@ -217,7 +217,8 @@
   @media (max-width:560px){ .skills-grid{grid-template-columns:1fr;} }
 
   /* ---------- FILTER BAR ---------- */
-  .filter-panel{
+  .filter-panel{scroll-margin-top:92px;
+    
     background:var(--panel); border:1px solid var(--border); border-radius:14px;
     padding:22px 24px 24px 24px; margin-bottom:34px;
   }
@@ -439,6 +440,69 @@
   }
   .honest b{color:var(--text); font-weight:600;}
 
+
+  /* ============ ADDED v2: service deep-dives, pillar, insights ============ */
+
+  .subsection{margin:56px 0 40px 0;}
+  .subsection .section-head{margin-bottom:28px;}
+
+  /* shared disclosure pattern (extends details.fcase) */
+  details.sdeep, details.insight{
+    background:var(--bg); border:1px solid var(--border); border-radius:12px; margin-top:16px;
+  }
+  details.sdeep[open], details.insight[open]{border-color:#3A4A6B;}
+  details.sdeep > summary, details.insight > summary{
+    cursor:pointer; list-style:none; padding:14px 18px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--teal);
+    display:flex; align-items:center; gap:12px;
+  }
+  details.sdeep > summary::-webkit-details-marker,
+  details.insight > summary::-webkit-details-marker{display:none;}
+  details.sdeep > summary::after, details.insight > summary::after{
+    content:'+'; margin-left:auto; color:var(--accent); font-size:17px; line-height:1;
+  }
+  details.sdeep[open] > summary::after, details.insight[open] > summary::after{content:'\2212';}
+  .sdeep-body, .insight-body{padding:4px 18px 20px 18px;}
+  .sdeep-body h4, .insight-body h4{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--muted); margin:20px 0 10px 0; font-weight:500;
+  }
+  .sdeep-body h4:first-child, .insight-body h4:first-child{margin-top:8px;}
+  .sdeep-body p, .insight-body p{font-size:14.5px; color:#C7CFDC; margin:0 0 12px 0;}
+
+  /* insights */
+  details.insight{background:var(--panel); margin-top:0;}
+  details.insight > summary{
+    padding:20px 24px; text-transform:none; letter-spacing:0; font-size:16px;
+    font-family:'Space Grotesk',sans-serif; font-weight:600; color:var(--text);
+  }
+  .insight-kicker{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--teal); flex:none;
+  }
+  .insight-body{padding:0 24px 26px 24px; border-top:1px solid var(--border); padding-top:20px;}
+  .insight-body p{font-size:15px; line-height:1.7;}
+  .insight-stack{display:flex; flex-direction:column; gap:12px;}
+
+  /* pillar definition blocks */
+  .def-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:36px;}
+  @media (max-width:820px){ .def-grid{grid-template-columns:1fr;} }
+  .def-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:22px 24px;
+  }
+  .def-card h4{
+    margin:0 0 10px 0; font-size:16px; font-weight:600; color:var(--text);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .def-card p{margin:0; font-size:14.5px; color:#C7CFDC;}
+  .synonyms{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--muted);
+    background:var(--bg-alt); border:1px solid var(--border); border-radius:10px;
+    padding:16px 20px; margin-top:28px;
+  }
+  .synonyms b{color:var(--text); font-weight:500;}
+
 </style>
 </head>
 <body>
@@ -449,11 +513,12 @@
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#work">Case Studies</a>
-      <a href="#approach">Approach</a>
+      <a href="#model">How It Works</a>
       <a href="#rates">Rates</a>
+      <a href="#insights">Insights</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a class="nav-cta" href="#contact">BOOK A CALL →</a>
+    <a class="nav-cta" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">BOOK A CALL →</a>
   </div>
 </nav>
 
@@ -463,7 +528,7 @@
     <h1 class="display">I build the demand engines that turn B2B spend into <em>pipeline.</em></h1>
     <p class="sub">Fractional and interim CMO for B2B SaaS, FinTech and recruitment tech. 19 years leading marketing at Hays, Randstad, Marks &amp; Spencer and Cigna. I take marketing functions that are busy but not converting and rebuild them around pipeline, unit economics and reporting a board can trust.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="#contact">Book a 20 minute call →</a>
+      <a class="btn-primary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Book a 20 minute call →</a>
       <a class="btn-secondary" href="#work">See the work</a>
     </div>
   </div>
@@ -473,7 +538,7 @@
   </div>
 </header>
 
-<section id="summary">
+<section id="summary" data-page="about">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">The Problem</div>
@@ -487,7 +552,7 @@
       <li>The CRM reports volume, not contribution. Board reporting is a dashboard screenshot nobody trusts.</li>
       <li>Enterprise accounts are the growth plan, but marketing still runs an SMB lead volume model.</li>
       <li>The MarTech stack was bought over five years by four different people and none of it talks to each other.</li>
-      <li>A marketing leader has left and their is no-one to provide guidance based on best practice and proven tactics.</li>
+      <li>A marketing leader has left and there is no one to provide guidance based on best practice and proven tactics.</li>
     </ul>
 
     <div class="summary-grid" style="margin-top:52px;">
@@ -495,7 +560,7 @@
         <h3 style="font-size:19px;margin:0 0 14px 0;">About Me</h3>
         <p>I have spent 19 years doing the same job under different titles: turning marketing budgets into pipeline that drives revenue. At Hays I was Global Head of Growth across 31 countries and 36 languages, and marketing-sourced share of enterprise pipeline went from 11% to 30% against a 350+ client account set. At Randstad I rebuilt digital and operations for 32 enterprise clients, cutting onboarding from 67 days to 30 and blended CAC by 29%. At KSeye I built an AI-driven demand engine on a £200k budget that lifted deal conversion 22% and organic leads 37% on flat spend.</p>
         <p>I start with the funnel, CAC and quickly highlight key issues. Almost every stalled B2B marketing function has a qualification problem or an attribution problem underneath whatever symptom is being reported. Fix that first and every other decision gets easier, because then you can finally see what it costs.</p>
-        <p>Many of my engagements have contract, fixed term, fractional or interim. Being able to quickly turnaround a function that is underperforming or leaderless and creating momentum quickly is the main deliverable.</p>
+        <p>Many of my engagements have been contract, fixed term, fractional or interim. Being able to quickly turn around a function that is underperforming or leaderless and creating momentum quickly is the main deliverable.</p>
       </div>
       <div class="fit-card">
         <h3>Who I work with</h3>
@@ -508,8 +573,10 @@
         </ul>
       </div>
     </div>
+  </div>
+</section>
 
-<section id="services" style="border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+<section id="services" data-page="services" style="border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">Services</div>
@@ -531,6 +598,21 @@
           <li>CAC, LTV to CAC, payback and contribution margin reported monthly</li>
         </ul>
         <span class="service-proof">+39% MQLs and +17% revenue in a declining market · Hays</span>
+        <details class="sdeep">
+          <summary>What this looks like in practice</summary>
+          <div class="sdeep-body">
+            <h4>What I fix</h4>
+            <p>The tell is always the same. Marketing reports rising MQLs. Sales say the leads are poor. Nobody can settle it because the definition of a qualified lead was never agreed, and the CRM cannot show contribution by channel. So the argument runs on opinion and the budget goes to whoever argues best.</p>
+            <h4>The work</h4>
+            <ul class="service-points"><li>Redefine what qualifies, in language sales sign up to. Where the buying committee justifies it, move from MQL to MQA so qualification sits at account level rather than individual level.</li><li>Rebuild lead scoring on behaviour and fit, with lifecycle stages that mean something and nurture that fires on intent rather than on a calendar.</li><li>Write down the sales follow-up SLA and enforce it. An unenforced SLA is a wish.</li><li>Put UTM governance, campaign taxonomy and multi-channel attribution inside HubSpot, Salesforce and GA4 so leadership sees channel contribution in real time.</li><li>Reallocate the channel mix on contribution. Paid, organic, AEO and GEO, CRM, social, display, programmatic, partner and events.</li><li>Report CAC by channel, LTV to CAC, payback period and contribution margin every month.</li></ul>
+            <h4>Results delivered</h4>
+            <div class="table-scroll"><table class="data-table"><tbody><tr><td>Marketing-sourced share of enterprise pipeline</td><td class="fig">11% → 30%, plus 30% influenced · Hays</td></tr><tr><td>MQLs and revenue in a declining market</td><td class="fig">+39% and +17% · Hays</td></tr><tr><td>Salary Benchmark campaign</td><td class="fig">+47% MQLs vs prior year, highest volume in company history · Hays</td></tr><tr><td>CAC while paid media grew £350k → £750k</td><td class="fig">−16%, ROAS +12%, LTV:CAC +19% · Hays</td></tr><tr><td>Organic lead volume on a flat budget</td><td class="fig">+37%, SEO and GEO leads +34% · KSeye</td></tr><tr><td>Deal conversion via propensity modelling</td><td class="fig">+22% · KSeye</td></tr><tr><td>Leads from a standing start</td><td class="fig">0 → 2,000 in three weeks · Hubbul</td></tr><tr><td>ICP lead volume on 45% less media spend</td><td class="fig">+11% · Eagle Eye</td></tr></tbody></table></div>
+            <h4>The first 90 days</h4>
+            <p>Weeks 1 to 4, the funnel maths, a qualification audit, a CRM and attribution review and interviews with sales. Weeks 5 to 8, the new qualification model goes live with scoring, routing and SLAs behind it. Weeks 9 to 12, attribution reporting is live, the first two channels are reallocated and the leadership team gets a pipeline report they trust.</p>
+            
+          </div>
+        </details>
+      
       </div>
 
       <div class="service-card">
@@ -545,6 +627,21 @@
           <li>Demandbase, 6sense, Apollo, Influ2, LinkedIn, Salesforce, HubSpot</li>
         </ul>
         <span class="service-proof">Enterprise pipeline share 11% → 30%, opportunities up 5x · Hays</span>
+        <details class="sdeep">
+          <summary>What this looks like in practice</summary>
+          <div class="sdeep-body">
+            <h4>What I fix</h4>
+            <p>ABM fails in UK B2B for one of two reasons. Either it is bought as a piece of software and nobody builds the programme around it, or it is run as personalised email to a list that sales did not agree to. Both produce the same result twelve months in: an expensive intent platform, a handful of anecdotes and no change in enterprise pipeline share.</p>
+            <h4>The work</h4>
+            <ul class="service-points"><li>Build a named account set, tiered one to three, sized against your addressable market and agreed jointly with sales rather than handed to them.</li><li>Map the buying committee. Enterprise deals are bought by five to nine people with different pain points, timelines and reasons to say no. Each one needs its own content.</li><li>Wire intent so it triggers an action, not a report. Surging accounts get routed and worked automatically.</li><li>Build Tier 1 playbooks with bespoke landing pages, whitepapers and campaign assets aligned to individual stakeholder pain points.</li><li>Run joint account planning, shared pipeline reporting and agreed lead scoring across sales and marketing. This is the part most programmes skip and the part that decides whether it works.</li></ul>
+            <h4>Results delivered</h4>
+            <div class="table-scroll"><table class="data-table"><tbody><tr><td>Marketing-sourced share of enterprise pipeline</td><td class="fig">11% → 30%, covering 60% of the new ARR target · Hays</td></tr><tr><td>New enterprise opportunities</td><td class="fig">5x · Hays</td></tr><tr><td>Net revenue retention across 350+ clients</td><td class="fig">119% · Hays</td></tr><tr><td>Revenue and profit from existing accounts</td><td class="fig">+45% and +89% · Hays</td></tr><tr><td>Tier 1 accounts progressed to an opportunity on a £200k budget</td><td class="fig">33% · KSeye</td></tr><tr><td>Time to opportunity on £1m+ ACV named accounts</td><td class="fig">9 months → 6 · Randstad</td></tr><tr><td>Closed-won rate after sales and marketing alignment</td><td class="fig">+22% · Randstad</td></tr><tr><td>Sales cycles via AI-driven workflows</td><td class="fig">67 → 30 days · Randstad</td></tr><tr><td>Revenue from enterprise accounts</td><td class="fig">+29% · We Are Aspire</td></tr></tbody></table></div>
+            <h4>The first 90 days</h4>
+            <p>Weeks 1 to 4, account tiering and buying committee mapping, agreed with sales in a working session rather than over email. Weeks 5 to 8, the platform is configured and the first Tier 1 playbooks are built. Weeks 9 to 12, the programme runs against a live account set with joint pipeline reporting in place.</p>
+            <h4>Platforms</h4><p>Demandbase, 6sense, Apollo, Clay, Influ2, Gong Engage, LinkedIn Campaign Manager, Salesforce, HubSpot, Tealium, Segment. I ran the ABM RFP at Hays covering Demandbase and 6sense, so I can tell you where each one earns its licence fee and where it does not.</p>
+          </div>
+        </details>
+      
       </div>
 
       <div class="service-card">
@@ -559,6 +656,21 @@
           <li>Agentic workflows that remove the spreadsheet calculations from month end</li>
         </ul>
         <span class="service-proof">Onboarding 67 → 30 days, operating costs down ~18% · Randstad</span>
+        <details class="sdeep">
+          <summary>What this looks like in practice</summary>
+          <div class="sdeep-body">
+            <h4>What I fix</h4>
+            <p>Most B2B MarTech stacks were not designed, they accumulated. Bought over five years by four different people, each solving one problem, none of them talking to the others. The symptom is a reporting cycle that eats days of manual work and still cannot answer the only question the board asks, which is what marketing contributed.</p>
+            <h4>The work</h4>
+            <ul class="service-points"><li>Audit what you actually have. Installed versus configured versus used. Most stacks pay a licence fee for functionality nobody switched on.</li><li>Architect the data layer: CDP, single customer view, CRM object model, lifecycle stage logic and lead scoring. This is the foundation and it is the part usually skipped.</li><li>Build attribution that survives scrutiny. Multi-touch into the CRM, UTM governance, campaign taxonomy, and media mix modelling where the spend justifies it.</li><li>Instrument reporting at board, exec, senior and team level. Different questions, different views, one source of truth underneath.</li><li>Automate the manual work with agentic workflows and integrations so month end stops being a spreadsheet exercise.</li></ul>
+            <h4>Results delivered</h4>
+            <div class="table-scroll"><table class="data-table"><tbody><tr><td>AI and MarTech architecture across 31 countries</td><td class="fig">Salesforce, Tealium CDP, Liferay DXP, Optimizely, Google 360 · Hays</td></tr><tr><td>36-domain migration, CMS upgrade and SEO overhaul</td><td class="fig">Organic traffic +90% · Hays</td></tr><tr><td>Enterprise onboarding across 32 clients</td><td class="fig">67 → 30 days, a 56% reduction · Randstad</td></tr><tr><td>Operating costs from data-driven decision making</td><td class="fig">~18% lower · Randstad</td></tr><tr><td>AI-powered personalisation via tag management</td><td class="fig">Conversion +23% · Randstad</td></tr><tr><td>Site launch time and annual saving</td><td class="fig">12 → 4 weeks, £700k a year · Marks and Spencer</td></tr><tr><td>Ireland Demandware → Salesforce Commerce Cloud</td><td class="fig">£0.7m a year saved, zero trading disruption · M&S</td></tr><tr><td>Tracking and attribution backlog</td><td class="fig">Resolved in 8 days after four months unresolved · EVEN Card</td></tr></tbody></table></div>
+            <h4>The first 90 days</h4>
+            <p>Weeks 1 to 4, a full stack audit and a data layer design. Weeks 5 to 8, attribution and UTM governance go live and the reporting layer is rebuilt. Weeks 9 to 12, the automation work lands and month end stops being manual.</p>
+            <h4>Platforms</h4><p>CRM and automation: HubSpot including Breeze, Salesforce, Salesforce Marketing Cloud, Marketo, Eloqua, Blueshift, Intercom. CDP and tags: Tealium, Segment, Google Tag Manager, Adobe Experience Manager. Analytics and BI: GA4, GA360, Adobe Analytics, Looker, Tableau, Power BI, Mixpanel. Testing: Optimizely, Adobe Target, VWO, Hotjar, Crazy Egg. AI: HubSpot Breeze, Make.com, custom GPTs, Claude MCPs and agents, Surfer SEO.</p>
+          </div>
+        </details>
+      
       </div>
 
       <div class="service-card">
@@ -573,19 +685,34 @@
           <li>Leave documented systems and playbooks, not knowledge in one head</li>
         </ul>
         <span class="service-proof">£12M omni-channel media plan built in the first 21 days · Ladbrokes</span>
+        <details class="sdeep">
+          <summary>What this looks like in practice</summary>
+          <div class="sdeep-body">
+            <h4>What I fix</h4>
+            <p>When a marketing leader leaves, the function does not pause politely while you recruit. Campaigns keep running, agencies keep invoicing, the team keeps making decisions without direction, and the pipeline that was already fragile gets more so. Senior recruitment takes three to six months. Interim cover is what fills it.</p>
+            <h4>The work</h4>
+            <ul class="service-points"><li>Stabilise first. Keep campaigns running, hold agencies to account and give the team direction inside the first fortnight. No restructuring in month one.</li><li>Diagnose what was working, what was not, and what the departing leader left unfinished.</li><li>Fix the two or three things producing most of the drag. Usually qualification, attribution and one badly briefed agency.</li><li>Write the spec for the permanent hire, sit on the interview panel and onboard the successful candidate.</li><li>Leave documented systems, playbooks and reporting behind, rather than knowledge in one person's head.</li></ul>
+            <h4>Results delivered</h4>
+            <div class="table-scroll"><table class="data-table"><tbody><tr><td>£12M omni-channel BTL and ATL media plan</td><td class="fig">Built inside the first 21 days · Ladbrokes</td></tr><tr><td>Salary Guide campaign</td><td class="fig">Highest MQL volume in company history, +47%, in the first six months · Hays</td></tr><tr><td>Tracking and attribution backlog</td><td class="fig">Cleared in 8 days after four months · EVEN Card</td></tr><tr><td>Enterprise client onboarding</td><td class="fig">67 → 30 days · Randstad</td></tr><tr><td>Site launch time</td><td class="fig">12 → 4 weeks · Marks and Spencer</td></tr><tr><td>Time to hire</td><td class="fig">60 → 37 days · We Are Aspire</td></tr><tr><td>Leads from a standing start</td><td class="fig">0 → 2,000 in three weeks · Hubbul</td></tr></tbody></table></div>
+            <h4>The first 90 days</h4>
+            <p>The first fortnight is stabilisation and listening. Weeks 3 to 6 are the diagnostic and the first fixes. From week 7 the permanent hire process runs in parallel with delivery, so the handover is planned from the start rather than improvised at the end.</p>
+            <h4>Platforms</h4><p>Change management is part of the job. Interim leadership fails when the changes leave with the interim. At Hays I delivered change and internal comms programmes securing adoption across 31 countries and 36 languages, including training hubs, workflow documentation, regional workshops and adoption tracking across 350+ clients. Prince2 Agile and APMG Change Management Foundation qualified.</p>
+          </div>
+        </details>
+      
       </div>
 
     </div>
 
     <div class="section-cta">
-      <a class="btn-primary" href="#contact">Book a 20 minute call →</a>
+      <a class="btn-primary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Book a 20 minute call →</a>
       <a class="btn-secondary" href="#rates">See rates</a>
     </div>
   </div>
 </section>
 
 
-<section id="work">
+<section id="work" data-page="case-studies">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">Case Studies</div>
@@ -646,7 +773,7 @@
           <h4>What I did</h4>
           <ul class="service-points"><li>Took end-to-end ownership of HubSpot as the GTM engine: lead scoring models, lifecycle stage logic, nurture workflows and sales system integrations.</li><li>Redesigned qualification from MQL to MQA, moving qualification to account level, with structured sales follow-up SLAs behind it.</li><li>Built agentic workflows in HubSpot Breeze and Make.com modelling lead propensity, risk profile and deal velocity across the full funnel.</li><li>Built an AI-driven ABM engine using intent data, custom GPTs, Apollo and LinkedIn, with Tier 1 account playbooks carrying bespoke landing pages, whitepapers and assets aligned to individual stakeholder pain points.</li><li>Built an AI-driven content and SEO programme using agents and Surfer SEO, with AEO and GEO citation techniques for AI answer engines.</li><li>Established UTM governance, campaign taxonomy standards and multi-channel attribution dashboards in HubSpot and GA4.</li><li>Terminated the incumbent agency, ran the replacement selection and rebuilt the partner set around AI and SEO capability.</li></ul>
           <h4>Results</h4>
-          <div class="table-scroll"><table class="data-table"><tbody><tr><td>Deal conversion</td><td class="fig">+22%</td></tr><tr><td>MQL to SQL conversion</td><td class="fig">+19%</td></tr><tr><td>Organic lead volume</td><td class="fig">+37% on a flat budget</td></tr><tr><td>Leads via SEO and GEO</td><td class="fig">+34%</td></tr><tr><td>New partner opportunities</td><td class="fig">3x</td></tr><tr><td>Contribution margin</td><td class="fig">67% → 82%</td></tr></tbody></table></div>
+          <div class="table-scroll"><table class="data-table"><tbody><tr><td>Tier 1 ABM accounts progressed to an opportunity</td><td class="fig">33%</td></tr><tr><td>Deal conversion</td><td class="fig">+22%</td></tr><tr><td>MQL to SQL conversion</td><td class="fig">+19%</td></tr><tr><td>Organic lead volume</td><td class="fig">+37% on a flat budget</td></tr><tr><td>Leads via SEO and GEO</td><td class="fig">+34%</td></tr><tr><td>New partner opportunities</td><td class="fig">3x</td></tr><tr><td>Contribution margin</td><td class="fig">67% → 82%</td></tr></tbody></table></div>
           <h4>What transfers</h4>
           <p>Small budgets force the right sequence. With £200k there is no option to buy your way past a broken qualification model, so the qualification work happened first and everything else compounded off it. The AI lift came from propensity modelling and content production at scale, both operational uses. It did not come from asking a model to make a strategic judgement.</p>
         </div>
@@ -711,71 +838,69 @@
     </div>
 
     
-<section id="skills">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">Expertise</div>
-      <h2 class="display">Where I add the most value</h2>
-      <p>16 areas, built up across 19 years and 20+ organisations. Click any tag to filter the work completed and results delivered.</p>
+<div id="skills" class="subsection">
+      <div class="section-head">
+        <div class="eyebrow">Expertise</div>
+        <h3 class="display" style="font-size:clamp(21px,2.6vw,27px);margin:14px 0 12px 0;">Where I add the most value</h3>
+        <p>16 areas, built up across 19 years and 20+ organisations. Click any tag to filter the work completed and results delivered.</p>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
     </div>
-    <div class="skills-grid" id="skillsGrid"></div>
-  </div>
-</section>
 
-<div class="filter-panel">
+<div class="filter-panel" id="filters">
       <div class="filter-panel-top">
         <span class="filter-title">Filter by skill</span>
-        <span class="filter-count" id="filterCount">62 of 62 shown</span>
+        <span class="filter-count" id="filterCount">64 of 64 shown</span>
       </div>
       <div class="chip-row" id="chipRow"></div>
     </div>
 
     <div class="case-grid" id="caseGrid">
 <!-- CASE-CARDS:START — generated from the CASES array by build_site.py. Do not edit by hand. -->
-      <article class="case-card" data-tags="ai demand seo">
+      <article class="case-card" data-tags="demand abm ai seo growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="eagleeye" data-company="Eagle Eye"><span>EE</span></div>
           <span class="case-meta"><b>Eagle Eye</b>Marketing Consultant · 2026</span>
         </div>
         <h3 class="case-headline display">+11% ICP lead volume</h3>
         <p class="narrative">Launched an AEO/GEO content strategy and implemented Influ2 to lift qualified lead volume from ideal-customer-profile accounts.</p>
-        <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="seo">SEO / AEO</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="seo">SEO / AEO</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="ai martech branding crm content">
+      <article class="case-card" data-tags="abm ai content martech branding crm">
         <div class="case-top">
           <div class="logo-badge" data-logo="eagleeye" data-company="Eagle Eye"><span>EE</span></div>
           <span class="case-meta"><b>Eagle Eye</b>Marketing Consultant · 2026</span>
         </div>
         <h3 class="case-headline display">Built the AI agent stack from scratch</h3>
         <p class="narrative">Built Claude-based MCPs and agents for persona research, messaging, brand assets and thought-leadership copy, wired into HubSpot, Monday and Canva. Rebuilt funnel reporting in Looker and reworked sales outreach with Gong Engage.</p>
-        <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="content">Content Marketing</button></div>
+        <div class="tag-row"><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="content">Content Marketing</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
-      <article class="case-card" data-tags="crm demand martech">
+      <article class="case-card" data-tags="demand martech crm">
         <div class="case-top">
           <div class="logo-badge" data-logo="kseye" data-company="KSeye"><span>KS</span></div>
           <span class="case-meta"><b>KSeye</b>Head of Marketing · 2025–2026</span>
         </div>
         <h3 class="case-headline display">Owned HubSpot end to end</h3>
         <p class="narrative">Took full ownership of HubSpot as the GTM engine: lead scoring, lifecycle stages, nurture workflows and sales system integrations, aligned to commercial growth targets.</p>
-        <div class="tag-row"><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
-      <article class="case-card" data-tags="ai demand martech">
+      <article class="case-card" data-tags="demand ai martech">
         <div class="case-top">
           <div class="logo-badge" data-logo="kseye" data-company="KSeye"><span>KS</span></div>
           <span class="case-meta"><b>KSeye</b>Head of Marketing · 2025–2026</span>
         </div>
         <h3 class="case-headline display">+22% deal conversion</h3>
         <p class="narrative">Designed agentic automation in HubSpot Breeze and Make.com to model lead propensity, risk profile and deal velocity across the funnel.</p>
-        <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
       </article>
-      <article class="case-card" data-tags="ai demand seo">
+      <article class="case-card" data-tags="demand ai content seo growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="kseye" data-company="KSeye"><span>KS</span></div>
           <span class="case-meta"><b>KSeye</b>Head of Marketing · 2025–2026</span>
         </div>
         <h3 class="case-headline display">+37% organic lead volume</h3>
         <p class="narrative">Built an AI-driven content and SEO programme using agents and Surfer SEO to generate and optimise pages at scale, improving SEO/AEO performance.</p>
-        <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="seo">SEO / AEO</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="content">Content Marketing</button><button class="tag" data-key="seo">SEO / AEO</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="martech data">
         <div class="case-top">
@@ -786,32 +911,41 @@
         <p class="narrative">Established UTM governance, campaign taxonomy standards and multi-channel attribution dashboards in HubSpot and GA4 for data-driven budget allocation.</p>
         <div class="tag-row"><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="data">Data &amp; Attribution</button></div>
       </article>
-      <article class="case-card" data-tags="strategy performance abm">
+      <article class="case-card" data-tags="demand abm ai growth">
+        <div class="case-top">
+          <div class="logo-badge" data-logo="kseye" data-company="KSeye"><span>KS</span></div>
+          <span class="case-meta"><b>KSeye</b>Head of Marketing · 2025–2026</span>
+        </div>
+        <h3 class="case-headline display">33% of Tier 1 accounts to opportunity</h3>
+        <p class="narrative">Designed an AI-driven ABM engine on a £200k total budget using intent data, custom GPTs, Apollo and LinkedIn for personalised outreach to key buying personas, with Tier 1 account playbooks pairing bespoke landing pages, whitepapers and campaign assets to individual stakeholder pain points.</p>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="growth">Growth Marketing</button></div>
+      </article>
+      <article class="case-card" data-tags="strategy abm performance">
         <div class="case-top">
           <div class="logo-badge" data-logo="randstad" data-company="Randstad"><span>RS</span></div>
           <span class="case-meta"><b>Randstad</b>Global Head of Digital & Operations · 2023–2024</span>
         </div>
         <h3 class="case-headline display">Restructured a 3-region team</h3>
         <p class="narrative">Restructured a team spanning NAM, EMEA and APAC to improve delivery, governance and optimisation of clients' performance marketing and ABM campaigns.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="abm">ABM</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
       </article>
-      <article class="case-card" data-tags="martech digital strategy crm">
+      <article class="case-card" data-tags="strategy digital martech crm">
         <div class="case-top">
           <div class="logo-badge" data-logo="randstad" data-company="Randstad"><span>RS</span></div>
           <span class="case-meta"><b>Randstad</b>Global Head of Digital & Operations · 2023–2024</span>
         </div>
         <h3 class="case-headline display">Onboarding time cut 67 → 30 days</h3>
         <p class="narrative">Scoped and implemented CDP, CRM, CMS, tag management and integration infrastructure for 32 enterprise clients, improving scalability across global markets.</p>
-        <div class="tag-row"><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="crm">CRM</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
-      <article class="case-card" data-tags="ai demand crm">
+      <article class="case-card" data-tags="demand abm ai crm">
         <div class="case-top">
           <div class="logo-badge" data-logo="randstad" data-company="Randstad"><span>RS</span></div>
           <span class="case-meta"><b>Randstad</b>Global Head of Digital & Operations · 2023–2024</span>
         </div>
         <h3 class="case-headline display">+22% closed-won rate</h3>
         <p class="narrative">Partnered with Sales to deploy AI-driven automation between Salesforce, HubSpot, LinkedIn and Demandbase, cutting the sales cycle from 67 to 30 days.</p>
-        <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="crm">CRM</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
       <article class="case-card" data-tags="strategy martech data">
         <div class="case-top">
@@ -822,59 +956,59 @@
         <p class="narrative">Architected a CDP/AI/BI data roadmap delivering KPI dashboards across sales, marketing and operations, driving cost reductions and CAC improvements of up to 47%.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="data">Data &amp; Attribution</button></div>
       </article>
-      <article class="case-card" data-tags="ai digital strategy">
+      <article class="case-card" data-tags="strategy ai digital">
         <div class="case-top">
           <div class="logo-badge" data-logo="randstad" data-company="Randstad"><span>RS</span></div>
           <span class="case-meta"><b>Randstad</b>Global Head of Digital & Operations · 2023–2024</span>
         </div>
         <h3 class="case-headline display">+23% conversion</h3>
         <p class="narrative">Engineered AI-powered personalisation using tag management and attribute segmentation to deliver intent-driven messaging across the funnel.</p>
-        <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="strategy">Strategy &amp; Leadership</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button></div>
       </article>
-      <article class="case-card" data-tags="strategy branding">
+      <article class="case-card" data-tags="strategy content branding growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="hays" data-company="Hays"><span>HY</span></div>
           <span class="case-meta"><b>Hays</b>Global Head of Growth · 2020–2023</span>
         </div>
         <h3 class="case-headline display">Reversed a declining market share</h3>
         <p class="narrative">Led a full brand repositioning across 31 countries: ICPs, value propositions, GenAI-driven thought leadership content, social listening and PR.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="branding">Brand &amp; Positioning</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="content">Content Marketing</button><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="martech seo gtm">
+      <article class="case-card" data-tags="martech gtm seo">
         <div class="case-top">
           <div class="logo-badge" data-logo="hays" data-company="Hays"><span>HY</span></div>
           <span class="case-meta"><b>Hays</b>Global Head of Growth · 2020–2023</span>
         </div>
         <h3 class="case-headline display">+90% organic traffic</h3>
         <p class="narrative">Ran a 36-domain site migration and CMS/SEO overhaul as one of three critical initiatives delivered with a 16-person team, alongside the rebrand and a MarTech/GTM transformation.</p>
-        <div class="tag-row"><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="seo">SEO / AEO</button><button class="tag" data-key="gtm">Go-To-Market Strategy</button></div>
+        <div class="tag-row"><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="gtm">Go-To-Market Strategy</button><button class="tag" data-key="seo">SEO / AEO</button></div>
       </article>
-      <article class="case-card" data-tags="strategy demand ai digital">
+      <article class="case-card" data-tags="strategy demand ai digital growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="hays" data-company="Hays"><span>HY</span></div>
           <span class="case-meta"><b>Hays</b>Global Head of Growth · 2020–2023</span>
         </div>
         <h3 class="case-headline display">+39% MQLs · +17% revenue</h3>
         <p class="narrative">Built a top-down global marketing strategy — CX overhauls, MarTech roadmaps, growth initiatives — and drove adoption through change programmes and upskilling.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="branding digital">
+      <article class="case-card" data-tags="digital branding">
         <div class="case-top">
           <div class="logo-badge" data-logo="hays" data-company="Hays"><span>HY</span></div>
           <span class="case-meta"><b>Hays</b>Global Head of Growth · 2020–2023</span>
         </div>
         <h3 class="case-headline display">NPS 14 → 29 in 6 months</h3>
         <p class="narrative">Led the Liferay re-platform and rebrand across 31 countries and 36 languages, including launch of new online learning products.</p>
-        <div class="tag-row"><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button></div>
+        <div class="tag-row"><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="branding">Brand &amp; Positioning</button></div>
       </article>
-      <article class="case-card" data-tags="performance demand">
+      <article class="case-card" data-tags="demand performance growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="hays" data-company="Hays"><span>HY</span></div>
           <span class="case-meta"><b>Hays</b>Global Head of Growth · 2020–2023</span>
         </div>
         <h3 class="case-headline display">Highest MQL volume in company history</h3>
         <p class="narrative">Optimised the performance marketing mix — job boards, SEO, CRM, PPC, social, display, programmatic, events — cutting CAC 16% and lifting ROAS 12%. Revamped Market Insight and Salary Benchmark campaigns to +47% MQLs vs prior year.</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="demand">Demand Generation</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="ai martech">
         <div class="case-top">
@@ -894,14 +1028,14 @@
         <p class="narrative">Led the Client Management & Solutions division, developing ABM, automation and process changes enabling faster campaign and product rollout for 350+ clients.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button></div>
       </article>
-      <article class="case-card" data-tags="demand abm strategy">
+      <article class="case-card" data-tags="strategy demand abm growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="hays" data-company="Hays"><span>HY</span></div>
           <span class="case-meta"><b>Hays</b>Global Head of Growth · 2020–2023</span>
         </div>
         <h3 class="case-headline display">5x enterprise pipeline</h3>
         <p class="narrative">Built and scaled a global Tier 1-to-3 ABM programme (Demandbase, intent data, custom lead scoring), growing enterprise pipeline from 11% to 30% of the total.</p>
-        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="strategy">Strategy &amp; Leadership</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="strategy branding">
         <div class="case-top">
@@ -912,23 +1046,23 @@
         <p class="narrative">Managed performance marketing, trade and content specialists across international markets, reporting into the global ecommerce leadership team.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="branding">Brand &amp; Positioning</button></div>
       </article>
-      <article class="case-card" data-tags="strategy performance">
+      <article class="case-card" data-tags="strategy performance growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="ms" data-company="Marks &amp; Spencer"><span>M&S</span></div>
           <span class="case-meta"><b>Marks & Spencer</b>Ecommerce / Head of Marketing · 2019</span>
         </div>
         <h3 class="case-headline display">£2m profit · India share 5% → 8%</h3>
         <p class="narrative">Delivered double-digit sales growth and doubled ecommerce penetration to 6% while growing India's contribution to the business.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="performance data">
+      <article class="case-card" data-tags="performance data growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="ms" data-company="Marks &amp; Spencer"><span>M&S</span></div>
           <span class="case-meta"><b>Marks & Spencer</b>Ecommerce / Head of Marketing · 2019</span>
         </div>
         <h3 class="case-headline display">+29% revenue via MMM</h3>
         <p class="narrative">Launched media mix modelling, clickstream and LTV analysis to upweight high-ROI channels, lifting ROAS 16% through new agencies and MarTech (Adobe Analytics, Salesforce).</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="data">Data &amp; Attribution</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="data">Data &amp; Attribution</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="digital martech">
         <div class="case-top">
@@ -939,14 +1073,14 @@
         <p class="narrative">Improved on-site search and recommendation rules, and rolled out free returns, local returns points and in-store refunds across international markets.</p>
         <div class="tag-row"><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
       </article>
-      <article class="case-card" data-tags="digital strategy martech">
+      <article class="case-card" data-tags="strategy digital martech growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="ms" data-company="Marks &amp; Spencer"><span>M&S</span></div>
           <span class="case-meta"><b>Marks & Spencer</b>Ecommerce / Head of Marketing · 2019</span>
         </div>
         <h3 class="case-headline display">12 weeks → 4 · £1.4M incremental revenue</h3>
         <p class="narrative">Redesigned the international site-launch process, cutting time-to-market from 12 to 4 weeks. That freed capacity for 5 unplanned country launches and saved £700k directly.</p>
-        <div class="tag-row"><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="digital martech">
         <div class="case-top">
@@ -957,14 +1091,14 @@
         <p class="narrative">Led the Ireland platform migration from Demandware to Salesforce Commerce Cloud, improving customer experience while cutting cost.</p>
         <div class="tag-row"><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
       </article>
-      <article class="case-card" data-tags="demand gtm branding">
+      <article class="case-card" data-tags="demand gtm branding growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="pomelo" data-company="Pomelo Pay"><span>PP</span></div>
           <span class="case-meta"><b>Pomelo Pay</b>Marketing Consultant · 2018</span>
         </div>
         <h3 class="case-headline display">+16% new customers</h3>
         <p class="narrative">Led GTM, branding and lead-gen strategy for a SaaS payments platform, building mobile-first acquisition campaigns.</p>
-        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="gtm">Go-To-Market Strategy</button><button class="tag" data-key="branding">Brand &amp; Positioning</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="gtm">Go-To-Market Strategy</button><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="digital martech">
         <div class="case-top">
@@ -993,14 +1127,23 @@
         <p class="narrative">Partnered with the Board and CEO on a rebrand combining 5 brands, a MarTech transformation for real-time personalisation, and a CRM overhaul upskilling 80+ sales staff.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
-      <article class="case-card" data-tags="demand crm strategy">
+      <article class="case-card" data-tags="strategy demand abm crm growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="aspire" data-company="We Are Aspire"><span>WA</span></div>
           <span class="case-meta"><b>We Are Aspire</b>Head of Marketing (Fractional) · 2016–2018</span>
         </div>
         <h3 class="case-headline display">2x candidate pipeline</h3>
         <p class="narrative">Built lead tracking, scoring and CRM workflows that doubled candidate pipelines, lifted hiring conversion 19% and cut time-to-hire 18%.</p>
-        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="strategy">Strategy &amp; Leadership</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="growth">Growth Marketing</button></div>
+      </article>
+      <article class="case-card" data-tags="abm crm data growth">
+        <div class="case-top">
+          <div class="logo-badge" data-logo="aspire" data-company="We Are Aspire"><span>WA</span></div>
+          <span class="case-meta"><b>We Are Aspire</b>Head of Marketing · 2016–2018</span>
+        </div>
+        <h3 class="case-headline display">+29% revenue from enterprise accounts</h3>
+        <p class="narrative">Shifted lead qualification to an account-based model with intent-triggered ABM and CRM automation on Segment CDP and Blueshift, lifting traffic 28% and cutting churn 34%.</p>
+        <div class="tag-row"><button class="tag" data-key="abm">ABM</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="data">Data &amp; Attribution</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="performance seo">
         <div class="case-top">
@@ -1020,41 +1163,41 @@
         <p class="narrative">Integrated Segment CDP and Blueshift to trigger AI-driven candidate engagement campaigns, lifting open rates 27% and leads 20%.</p>
         <div class="tag-row"><button class="tag" data-key="ai">AI &amp; Automation</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
-      <article class="case-card" data-tags="digital performance">
+      <article class="case-card" data-tags="performance digital growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="aspire" data-company="We Are Aspire"><span>WA</span></div>
           <span class="case-meta"><b>We Are Aspire</b>Head of Marketing (Fractional) · 2016–2018</span>
         </div>
         <h3 class="case-headline display">+159% conversion</h3>
         <p class="narrative">Ran a CRO/UX improvement programme that grew monthly traffic 102% and new customers 111%.</p>
-        <div class="tag-row"><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="branding content agency">
+      <article class="case-card" data-tags="content branding agency">
         <div class="case-top">
           <div class="logo-badge" data-logo="aspire" data-company="We Are Aspire"><span>WA</span></div>
           <span class="case-meta"><b>We Are Aspire</b>Head of Marketing (Fractional) · 2016–2018</span>
         </div>
         <h3 class="case-headline display">20k leads from one campaign</h3>
         <p class="narrative">Launched the Digital Salary Guide content and PR campaign, generating 20k leads and 17k new customers, and negotiated £60k savings across 16 supplier contracts.</p>
-        <div class="tag-row"><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="content">Content Marketing</button><button class="tag" data-key="agency">Agency &amp; Vendor Management</button></div>
+        <div class="tag-row"><button class="tag" data-key="content">Content Marketing</button><button class="tag" data-key="branding">Brand &amp; Positioning</button><button class="tag" data-key="agency">Agency &amp; Vendor Management</button></div>
       </article>
-      <article class="case-card" data-tags="strategy pnl">
+      <article class="case-card" data-tags="strategy pnl growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="aspire" data-company="We Are Aspire"><span>WA</span></div>
           <span class="case-meta"><b>We Are Aspire</b>Head of Marketing (Fractional) · 2016–2018</span>
         </div>
         <h3 class="case-headline display">£521k saved · +27% revenue p.a.</h3>
         <p class="narrative">Delivered a cost saving alongside sustained annual revenue growth across the transformation programme.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="demand crm">
+      <article class="case-card" data-tags="demand crm growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="hubbul" data-company="Hubbul"><span>HB</span></div>
           <span class="case-meta"><b>Hubbul</b>Marketing Consultant · 2015–2016</span>
         </div>
         <h3 class="case-headline display">0 → 2,000 leads in 3 weeks</h3>
         <p class="narrative">Launched a subscription recruitment engine from zero, building the MarTech stack (Salesforce, Segment, Optimizely, Blueshift) and automated web scraping and CRM messaging.</p>
-        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="crm">CRM</button></div>
+        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="performance">
         <div class="case-top">
@@ -1074,23 +1217,23 @@
         <p class="narrative">Built a 5-year P&L, KPI and target plan used for channel optimisation, forecasting and external fundraising.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
       </article>
-      <article class="case-card" data-tags="crm martech performance">
+      <article class="case-card" data-tags="performance martech crm growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="evencard" data-company="EVEN Card"><span>EV</span></div>
           <span class="case-meta"><b>EVEN Card</b>Marketing / Ecommerce Director · 2015</span>
         </div>
         <h3 class="case-headline display">+18% conversions · -31% churn</h3>
         <p class="narrative">Overhauled customer journeys, UX, CRM and automation on HubSpot, lifting deposits 22% and card usage 12% while cutting churn.</p>
-        <div class="tag-row"><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="performance data">
+      <article class="case-card" data-tags="performance data growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="evencard" data-company="EVEN Card"><span>EV</span></div>
           <span class="case-meta"><b>EVEN Card</b>Marketing / Ecommerce Director · 2015</span>
         </div>
         <h3 class="case-headline display">8 days to fix a 4-month problem</h3>
         <p class="narrative">Resolved tracking and attribution issues that had gone unfixed for 4 months, then grew traffic 39% and sign-ups 26% per month while cutting CPA from £250 to £14.</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="data">Data &amp; Attribution</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="data">Data &amp; Attribution</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="strategy gtm">
         <div class="case-top">
@@ -1101,14 +1244,14 @@
         <p class="narrative">Designed the target operating model and GTM plan for a new B2C proposition, rolled out to 29 countries and B2B partners including AA, RAC, Saga and LBG.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="gtm">Go-To-Market Strategy</button></div>
       </article>
-      <article class="case-card" data-tags="performance">
+      <article class="case-card" data-tags="performance growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="cigna" data-company="Cigna Corporation"><span>CG</span></div>
           <span class="case-meta"><b>Cigna Corporation</b>Head of Ecommerce & Marketing · 2014–2015</span>
         </div>
         <h3 class="case-headline display">Conversion 2.7% → 4.8%</h3>
         <p class="narrative">Cut PPC CPA from £250 to £60 while increasing monthly sales by roughly 200 units.</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="digital pnl">
         <div class="case-top">
@@ -1146,14 +1289,14 @@
         <p class="narrative">Scoped and implemented a custom product feed and CMS solution that eliminated errors in SKU uploads.</p>
         <div class="tag-row"><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
       </article>
-      <article class="case-card" data-tags="performance digital crm">
+      <article class="case-card" data-tags="performance digital crm growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="ladbrokes" data-company="Ladbrokes"><span>LD</span></div>
           <span class="case-meta"><b>Ladbrokes</b>Head of Marketing & Trading (Mobile) · 2012–2013</span>
         </div>
         <h3 class="case-headline display">+139% app downloads</h3>
         <p class="narrative">Transformed mobile acquisition, journeys and CRM strategy, lifting registrations 65% against target and revenue 31% year on year.</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="crm">CRM</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="strategy performance">
         <div class="case-top">
@@ -1164,32 +1307,32 @@
         <p class="narrative">Built a full BTL and ATL media plan — SEO, display, affiliates, paid, social, print, TV — within the first three weeks of the role.</p>
         <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
       </article>
-      <article class="case-card" data-tags="data performance pnl">
+      <article class="case-card" data-tags="performance data pnl">
         <div class="case-top">
           <div class="logo-badge" data-logo="ladbrokes" data-company="Ladbrokes"><span>LD</span></div>
           <span class="case-meta"><b>Ladbrokes</b>Head of Marketing & Trading (Mobile) · 2012–2013</span>
         </div>
         <h3 class="case-headline display">£200k saved on media spend</h3>
         <p class="narrative">Designed an omni-channel customer profiling model for personalised offers, cited as a key achievement in the CEO's quarterly update, and built a tracking and reporting model that saved £200k through media spend optimisation.</p>
-        <div class="tag-row"><button class="tag" data-key="data">Data &amp; Attribution</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="data">Data &amp; Attribution</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
       </article>
-      <article class="case-card" data-tags="performance">
+      <article class="case-card" data-tags="performance growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="ladbrokes" data-company="Ladbrokes"><span>LD</span></div>
           <span class="case-meta"><b>Ladbrokes</b>Head of Marketing & Trading (Mobile) · 2012–2013</span>
         </div>
         <h3 class="case-headline display">Recovered mobile market share</h3>
         <p class="narrative">Grew mobile market share 22% after a drop from 2nd to 7th in the market, while cutting display cost-of-signup 46%.</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="strategy pnl">
+      <article class="case-card" data-tags="strategy pnl growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="accessoriesdirect" data-company="Accessories Direct"><span>AD</span></div>
           <span class="case-meta"><b>Accessories Direct</b>Head of Ecommerce · 2012</span>
         </div>
         <h3 class="case-headline display">-44% overheads, +16% revenue/mo</h3>
         <p class="narrative">Took full P&L ownership, streamlining overheads while growing monthly revenue and managing a team of 7.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="performance agency">
         <div class="case-top">
@@ -1200,32 +1343,32 @@
         <p class="narrative">Brought in a new search agency and affiliate network, lifting PPC ROI 335% and affiliate sales 233%.</p>
         <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="agency">Agency &amp; Vendor Management</button></div>
       </article>
-      <article class="case-card" data-tags="crm martech">
+      <article class="case-card" data-tags="martech crm">
         <div class="case-top">
           <div class="logo-badge" data-logo="accessoriesdirect" data-company="Accessories Direct"><span>AD</span></div>
           <span class="case-meta"><b>Accessories Direct</b>Head of Ecommerce · 2012</span>
         </div>
         <h3 class="case-headline display">+157% eCRM sales</h3>
         <p class="narrative">Built loyalty and segmentation programmes that grew eCRM-driven sales significantly.</p>
-        <div class="tag-row"><button class="tag" data-key="crm">CRM</button><button class="tag" data-key="martech">MarTech &amp; Ops</button></div>
+        <div class="tag-row"><button class="tag" data-key="martech">MarTech &amp; Ops</button><button class="tag" data-key="crm">CRM</button></div>
       </article>
-      <article class="case-card" data-tags="performance pnl">
+      <article class="case-card" data-tags="performance pnl growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="alpari" data-company="Alpari (UK)"><span>AP</span></div>
           <span class="case-meta"><b>Alpari (UK)</b>Global Marketing & Website Manager · 2011–2012</span>
         </div>
         <h3 class="case-headline display">£500k → £5.5M budget</h3>
         <p class="narrative">Scaled PPC spend across 8 websites in 15 countries, cutting CPA 66% and CPC 32% quarter on quarter while growing leads 17% and new accounts 5% per month.</p>
-        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
-      <article class="case-card" data-tags="seo performance">
+      <article class="case-card" data-tags="performance seo">
         <div class="case-top">
           <div class="logo-badge" data-logo="alpari" data-company="Alpari (UK)"><span>AP</span></div>
           <span class="case-meta"><b>Alpari (UK)</b>Global Marketing & Website Manager · 2011–2012</span>
         </div>
         <h3 class="case-headline display">#1 ranking for "UK forex broker"</h3>
         <p class="narrative">Grew SEO traffic 22% and secured top rankings for core terms within 2 months of a product launch.</p>
-        <div class="tag-row"><button class="tag" data-key="seo">SEO / AEO</button><button class="tag" data-key="performance">Performance &amp; Paid Media</button></div>
+        <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="seo">SEO / AEO</button></div>
       </article>
       <article class="case-card" data-tags="performance agency">
         <div class="case-top">
@@ -1245,14 +1388,14 @@
         <p class="narrative">Ran the RFP for Coremetrics and SugarCRM and redefined the site UX to lift conversion.</p>
         <div class="tag-row"><button class="tag" data-key="digital">Digital Transformation &amp; CX</button><button class="tag" data-key="agency">Agency &amp; Vendor Management</button></div>
       </article>
-      <article class="case-card" data-tags="strategy pnl">
+      <article class="case-card" data-tags="strategy pnl growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="signet" data-company="Signet Group"><span>SG</span></div>
           <span class="case-meta"><b>Signet Group</b>Head of Ecommerce · 2009–2011</span>
         </div>
         <h3 class="case-headline display">+17% online revenue</h3>
         <p class="narrative">Ran ecommerce and online marketing for H.Samuel and Ernest Jones — the UK's two largest jewellery retailers — on a £3m budget with a team of 5.</p>
-        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="pnl">P&amp;L &amp; Budget Management</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
       <article class="case-card" data-tags="digital">
         <div class="case-top">
@@ -1281,14 +1424,14 @@
         <p class="narrative">Coordinated a new search agency, Omniture and CMS implementation, expanding the paid search account by 30x.</p>
         <div class="tag-row"><button class="tag" data-key="performance">Performance &amp; Paid Media</button><button class="tag" data-key="agency">Agency &amp; Vendor Management</button></div>
       </article>
-      <article class="case-card" data-tags="demand strategy">
+      <article class="case-card" data-tags="strategy demand growth">
         <div class="case-top">
           <div class="logo-badge" data-logo="euromoney" data-company="Euromoney plc"><span>EM</span></div>
           <span class="case-meta"><b>Euromoney plc</b>Online Marketing Manager · 2007–2008</span>
         </div>
         <h3 class="case-headline display">Trebled leads and sales in 4 months</h3>
         <p class="narrative">Transformed lead generation, sales and website processes, and launched metalbulletinstore.com to £1m in year-one sales.</p>
-        <div class="tag-row"><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="strategy">Strategy &amp; Leadership</button></div>
+        <div class="tag-row"><button class="tag" data-key="strategy">Strategy &amp; Leadership</button><button class="tag" data-key="demand">Demand Generation</button><button class="tag" data-key="growth">Growth Marketing</button></div>
       </article>
 <!-- CASE-CARDS:END -->
     </div>
@@ -1301,7 +1444,73 @@
   </div>
 </section>
 
-<section id="approach" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+<section id="model" data-page="fractional-cmo">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The Model</div>
+      <h2 class="display">What a fractional CMO actually is</h2>
+      <p>The model has grown quickly because the maths works. Here is what you get, what you don't, and how it compares to the alternatives.</p>
+    </div>
+
+    <p class="lede">A fractional CMO is an experienced marketing leader who works part time inside your business, usually on a monthly retainer. Not a consultant who delivers a deck and leaves. They sit in your leadership team, set the strategy, direct your internal team and agencies, and carry the commercial outcome. The engagement is measured in days per month and the relationship usually runs six to eighteen months.</p>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <h4>Strategy and prioritisation</h4>
+        <p>Deciding what marketing is for, which segments matter and what gets stopped. Most stalled functions are doing too many things badly rather than too few things well.</p>
+      </div>
+      <div class="def-card">
+        <h4>Funnel and qualification</h4>
+        <p>Defining what a qualified lead is, in language sales agree with, and building the scoring, routing and SLA logic behind it. This is where I start in almost every engagement.</p>
+      </div>
+      <div class="def-card">
+        <h4>Measurement and unit economics</h4>
+        <p>Attribution, CAC, LTV to CAC, payback period, contribution margin, and marketing-sourced and influenced pipeline share. Board reporting that survives a hard question.</p>
+      </div>
+      <div class="def-card">
+        <h4>Team and agencies</h4>
+        <p>Mentoring the internal team into more responsibility. Reviewing, rebriefing or replacing agencies. Hiring the permanent leader who eventually replaces you.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:19px;margin:44px 0 18px 0;">Fractional, interim, consultant or permanent</h3>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead><tr><th></th><th>Fractional</th><th>Interim</th><th>Consultant</th><th>Permanent</th></tr></thead>
+        <tbody>
+          <tr><td>Commitment</td><td>1 to 2 days a week</td><td>3 to 5 days a week</td><td>Project based</td><td>Full time</td></tr>
+          <tr><td>Duration</td><td>6 to 18 months</td><td>3 to 9 months</td><td>4 to 12 weeks</td><td>Open ended</td></tr>
+          <tr><td>Implements</td><td>Yes</td><td>Yes</td><td>No, advises only</td><td>Yes</td></tr>
+          <tr><td>Manages the team</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+          <tr><td>Time to start</td><td>Days</td><td>Days</td><td>Days</td><td>3 to 6 months</td></tr>
+          <tr><td>Annual cost</td><td class="fig">From £36,000</td><td class="fig">On duration</td><td class="fig">Fixed scope</td><td class="fig">~£163,850</td></tr>
+          <tr><td>Exit cost</td><td>Notice period only</td><td>Fixed end date</td><td>None</td><td>3 month notice</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:19px;margin:44px 0 18px 0;">When it works best</h3>
+    <ul class="problem-list">
+      <li>Growth has plateaued despite ongoing marketing activity.</li>
+      <li>The founder or CEO has become the de facto marketing leader and needs to hand it over.</li>
+      <li>Sales and marketing disagree about lead quality and neither side has data to settle it.</li>
+      <li>You have a capable marketing manager who needs senior cover rather than replacement.</li>
+      <li>Enterprise or named account growth is the plan but marketing still runs an SMB volume model.</li>
+      <li>Investors want a credible growth plan and marketing cannot currently produce one.</li>
+    </ul>
+
+    <div class="synonyms">
+      <b>Also called:</b> outsourced CMO · virtual CMO · part-time CMO · CMO as a service · freelance CMO · interim marketing director · fractional marketing director. There is no meaningful difference between them.
+    </div>
+
+    <div class="section-cta">
+      <a class="btn-primary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Book a 20 minute call →</a>
+      <a class="btn-secondary" href="#rates">See rates</a>
+    </div>
+  </div>
+</section>
+
+<section id="approach" data-page="fractional-cmo" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">How It Works</div>
@@ -1333,11 +1542,11 @@
         </tbody>
       </table>
     </div>
-    <p class="rate-note">A fractional CMO sets direction, writes the brief and the agency/team delivers against it. I usually keep the incumbent agency and give them a sharper brief, SLAs and specfic delivarables - Most teams and agencies underperform on a poor brief and process, rather than on poor capability.</p>
+    <p class="rate-note">A fractional CMO sets direction, writes the brief and the agency/team delivers against it. I usually keep the incumbent agency and give them a sharper brief, SLAs and specific deliverables - Most teams and agencies underperform on a poor brief and process, rather than on poor capability.</p>
   </div>
 </section>
 
-<section id="rates">
+<section id="rates" data-page="rates">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">Rates</div>
@@ -1359,7 +1568,7 @@
           <ul class="fit-list">
             <li><b>Hands-on senior time.</b><br>Hybrid in London and the South East. Remote elsewhere or feel free to discuss travel and accommodation with me.</li>
             <li><b>My Network.</b><br>Where an engagement needs a specialist which you don't have, I bring one in, transparently and priced up front.</li>
-            <li><b>The Playbooks</b><br>You are buyng access to Marketing P&amp;L and forecasting models, Demand Gen, ABM, Attribution, SEO, Funnel Conversion, CRM and many more frameworks crafted over 20 years.</li>
+            <li><b>The Playbooks</b><br>You are buying access to Marketing P&amp;L and forecasting models, Demand Gen, ABM, Attribution, SEO, Funnel Conversion, CRM and many more frameworks crafted over 20 years.</li>
           </ul>
         </div>
       </div>
@@ -1391,7 +1600,7 @@
             <tr><td>Employer pension at 6%</td><td class="fig">£6,600</td></tr>
             <tr><td>Equipment, HR and overheads</td><td class="fig">~£10,000</td></tr>
             <tr><td>Recruitment fee</td><td class="fig">~£10,000</td></tr>
-            <tr><td><b style="color:var(--text)">True annual cost</b></td><td class="fig">~£163,350</td></tr>
+            <tr><td><b style="color:var(--text)">True annual cost</b></td><td class="fig">~£163,850</td></tr>
           </tbody>
         </table>
       </div>
@@ -1404,7 +1613,7 @@
             <tr><td>Less UK average sick days</td><td class="fig">−5.7</td></tr>
             <tr><td>Less training and internal events</td><td class="fig">−2</td></tr>
             <tr><td><b style="color:var(--text)">Productive days</b></td><td class="fig">~219</td></tr>
-            <tr><td><b style="color:var(--text)">Effective cost per productive day</b></td><td class="fig">~£747</td></tr>
+            <tr><td><b style="color:var(--text)">Effective cost per productive day</b></td><td class="fig">~£748</td></tr>
           </tbody>
         </table>
       </div>
@@ -1412,12 +1621,48 @@
     <p class="rate-note">The costs that do not appear in that table are the ones that hurt most: three to six months of recruitment before they start, another three to six months of drift if the hire is wrong, and a twelve week notice period when they leave.</p>
 
     <div class="section-cta">
-      <a class="btn-primary" href="#contact">Book a 20 minute call →</a>
+      <a class="btn-primary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Book a 20 minute call →</a>
     </div>
   </div>
 </section>
 
-<section id="faq" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+<section id="insights" data-page="insights" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Insights</div>
+      <h2 class="display">Things I say on most first calls</h2>
+      <p>Written for the person signing the invoice, not for marketers. Open any one to read it in full.</p>
+    </div>
+    <div class="insight-stack">
+      <details class="insight" id="insight-mql-wrong-unit" data-page="insights/mql-wrong-unit">
+        <summary><span class="insight-kicker">Demand Generation</span>MQL is the wrong unit of measurement for enterprise B2B</summary>
+        <div class="insight-body"><p>If your average deal involves five to nine people and takes six months to close, scoring individuals and calling one of them qualified is a category error. You are measuring a person when the thing that buys is an account.</p><p>The symptom is familiar. Marketing reports MQLs going up. Sales say the quality has dropped. Both are telling the truth. Volume rose because the scoring model rewards behaviour that is easy to generate, and quality fell because none of that behaviour tells you whether the account is in market.</p><p><b>What to change.</b> Move the unit of qualification from the individual to the account. An MQA, a marketing qualified account, fires when enough of the right signals stack up across the buying committee rather than when one person hits a points threshold. Three people from the same company reading pricing content in a fortnight is a buying signal. One person downloading three guides is a researcher.</p><p>The scoring model has to change with it. Fit scoring on firmographics and technographics, behaviour scoring across all known contacts at the account, and intent as a third input rather than a separate dashboard. An account crosses the line when all three agree, not when one of them spikes.</p><p><b>The part that decides whether it works.</b> Sales have to sign the definition. Not be consulted on it, sign it. If a sales director cannot look at your MQA definition and say yes, I will work every one of those, you do not have a qualification model, you have a marketing opinion. Write the follow-up SLA down at the same time and put a number on it: contacted within one working day, three attempts across two channels, disposition recorded in the CRM.</p><p><b>What it does to the numbers.</b> Volume drops. That is the point and it is worth saying out loud to the board before you start, because the first month's report will look like a step backwards. At KSeye this took MQL to SQL conversion up 19% and deal conversion up 22%. At We Are Aspire, moving 80+ sales staff onto an account-based model doubled the pipeline while cutting churn 34%.</p><p>The wider effect is that the argument stops. When sales and marketing have agreed the definition in advance, lead quality stops being a monthly negotiation and the conversation moves to where it should be, which is coverage of the accounts you both want to win.</p>
+          <div class="section-cta"><a class="btn-secondary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Talk this through →</a></div>
+        </div>
+      </details>
+      <details class="insight" id="insight-abm-year-one" data-page="insights/abm-year-one">
+        <summary><span class="insight-kicker">ABM</span>Why most UK ABM programmes fail in year one</summary>
+        <div class="insight-body"><p>Two failure modes account for nearly all of them, and both happen before a single campaign goes live.</p><p><b>The first is buying the platform before designing the programme.</b> An intent platform tells you which accounts are researching a topic. That is useful only if something happens automatically when it fires. Most programmes buy the licence, connect it to a dashboard, and discover twelve months later that nobody was assigned to act on it. The platform did exactly what it promised. The programme around it did not exist.</p><p><b>The second is building the account list without sales.</b> Marketing pulls a list from the CRM, tiers it, builds beautiful assets against it, and then finds that half the Tier 1 accounts are ones sales walked away from two years ago for reasons nobody wrote down. The programme is dead on arrival and the post-mortem blames the creative.</p><p><b>The order that works.</b> Agree the account set with sales first, in a working session, with a whiteboard. Then map the buying committee for each tier, because a CFO and a Head of Operations at the same account are not the same target and should not receive the same thing. Then build the playbooks. Then buy the platform, and buy it against a spec you can now write properly because you know what you need it to do.</p><p>That order feels slow. It takes four to six weeks before anything looks like marketing. It is still faster than the alternative, which is twelve months of activity and no movement in pipeline share.</p><p><b>What good looks like at twelve months.</b> One number: marketing-sourced share of pipeline in your named accounts. Not engagement, not reach, not account penetration. At Hays that number went from 11% to 30%, with a further 30% influenced, which together covered 60% of the new ARR target. New enterprise opportunities grew fivefold. At Randstad, aligning sales and marketing on joint account planning and shared pipeline reporting lifted closed-won rate 22% and cut time to opportunity from nine months to six.</p><p><b>A test before you start.</b> If your average contract value is under about £25k, or sales cannot name the accounts they want, or there is no CRM discipline to build on, ABM will not fix it and it will cost you a year. Fix the qualification model first. ABM amplifies a working funnel. It does not create one.</p>
+          <div class="section-cta"><a class="btn-secondary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Talk this through →</a></div>
+        </div>
+      </details>
+      <details class="insight" id="insight-brief-not-agency" data-page="insights/brief-not-agency">
+        <summary><span class="insight-kicker">Agencies</span>Your agency is probably not underperforming, your brief is</summary>
+        <div class="insight-body"><p>Most agency reviews are triggered by a symptom the agency did not cause. Leads are down, so the paid search agency is on notice. Nobody has checked whether the definition of a lead changed, whether the tracking broke, or whether the agency has ever been told what a good outcome looks like in commercial terms rather than channel terms.</p><p>Running a pitch process costs three to six months and a large amount of internal time. Before you start one, it is worth ruling out the cheaper explanation.</p><p><b>Four things a brief has to contain.</b> The commercial outcome, expressed in pipeline or revenue rather than clicks. The definition of a qualified lead, agreed with sales. What the agency is allowed to change without asking. And the reporting cadence, with the specific metrics that will be reviewed at each one.</p><p>Most briefs contain none of these. They contain a budget, a channel and a target audience, which is a purchase order with adjectives.</p><p><b>The diagnostic to run first.</b> Ask the agency what they think success looks like and compare it to what you think it looks like. If those two answers differ, you have found your problem and it is not on their side of the table. Then check whether they have access to closed-won data. An agency optimising to form fills when you are measuring closed revenue is being asked to hit a target they cannot see.</p><p>Then check the tracking. In my experience it is broken more often than anyone assumes, and everybody is arguing about performance while looking at numbers that were wrong before the argument started. At EVEN Card a tracking and attribution issue had sat unresolved for four months. It took eight days once someone owned it, and it changed what the performance data said.</p><p><b>When a switch is genuinely warranted.</b> When the agency lacks a capability you now need, when the senior people who won the pitch have quietly left the account, or when they have been given a good brief and clear data and still cannot deliver against it for two consecutive quarters. Those are real reasons. Poor results against a vague brief is not one.</p><p>I usually keep the incumbent agency. Giving them a sharper brief, agreed SLAs and specific deliverables is faster and cheaper than a pitch process, and it tests the relationship properly. If they improve, you have saved six months. If they do not, you now have documented evidence for the switch rather than a feeling.</p>
+          <div class="section-cta"><a class="btn-secondary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Talk this through →</a></div>
+        </div>
+      </details>
+      <details class="insight" id="insight-ai-what-worked" data-page="insights/ai-what-worked">
+        <summary><span class="insight-kicker">AI</span>AI in B2B marketing: what actually worked and what did not</summary>
+        <div class="insight-body"><p>I have built AI into three marketing functions now. Here is the honest split between what produced measurable results and what did not survive contact with reality.</p><p><b>What worked: propensity modelling.</b> Agentic workflows in HubSpot Breeze and Make.com scoring lead propensity, risk profile and deal velocity across the full funnel. This works because it is a pattern-matching problem over structured data you already own, which is what these models are genuinely good at. At KSeye it contributed to a 22% lift in deal conversion.</p><p><b>What worked: content production at scale.</b> Agents plus Surfer SEO generating and optimising content and landing pages, with AEO and GEO citation techniques so the output is structured for AI answer engines as well as search. Organic lead volume grew 37% on a flat budget, with SEO and GEO leads up 34%. The gain is throughput, not quality per piece. A human still edits everything that ships.</p><p><b>What worked: research and first drafts.</b> Persona research, market and prospect analysis, case study generation and pitch deck assembly. At Randstad this was part of cutting enterprise onboarding from 67 days to 30. The model does not produce the final artefact, it removes the blank page and the three hours of gathering that precedes it.</p><p><b>What did not work: strategic judgement.</b> Anything where a model was asked to decide rather than to produce. Which segments to prioritise, what to stop doing, how to sequence a transformation. The output is always plausible and frequently wrong in ways that are expensive to discover, because it reads as confident and it has no access to the political and commercial context that determines whether a plan is actually executable.</p><p><b>What did not work: unsupervised outbound.</b> Personalisation at scale without a human in the loop generates volume and burns list quality. The cost does not show up in the campaign report, it shows up six months later in reply rates.</p><p><b>The pattern.</b> AI is reliably good at production and pattern recognition, and reliably bad at judgement under uncertainty. Everything that worked was operational. Nothing that worked was strategic. If a vendor is selling you the strategic version, ask them for the pipeline number.</p><p><b>What this means for your stack.</b> Do not buy an AI marketing platform. Put AI into the workflows you already run, where the data is already clean and the output has an owner. The businesses getting results are not the ones with the most tools, they are the ones who fixed their data layer first and then automated on top of it.</p>
+          <div class="section-cta"><a class="btn-secondary" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">Talk this through →</a></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="faq" data-page="fractional-cmo" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">FAQ</div>
@@ -1430,7 +1675,7 @@
       </details>
       <details class="faq">
         <summary>How much does a fractional CMO cost in the UK?</summary>
-        <p>My day rate is £750 for retained fractional work, which puts one day a week at around £3,250 a month. A permanent B2B CMO costs around £185,000 a year fully loaded once employer NI, pension, bonus, overheads and recruitment fees are included, which works out at roughly £845 per productive day after holiday and sickness are removed.</p>
+        <p>My day rate is £750 for retained fractional work, which puts one day a week from £3,000 a month. A permanent CMO on a £110,000 base costs around £163,850 a year once bonus, employer NI, pension, overheads and recruitment fees are added, which works out at roughly £748 per productive day after holiday and sickness are removed.</p>
       </details>
       <details class="faq">
         <summary>How is a fractional CMO different from a marketing agency?</summary>
@@ -1482,6 +1727,10 @@
     <h2 class="display">Twenty minutes, no pitch.</h2>
     <p style="color:var(--muted);font-size:16px;max-width:560px;margin:-16px 0 30px 0;">Tell me where the pipeline is stalling and I will tell you honestly whether a fractional CMO is the right answer, or whether you need something else.</p>
     <div class="contact-grid">
+      <a class="contact-card" href="https://cal.com/umesh-bhudia-wlzfap/30min" target="_blank" rel="noopener noreferrer">
+        <span class="label">Book a call</span>
+        <span class="value">20 minutes, no pitch</span>
+      </a>
       <a class="contact-card" href="mailto:umesh.bhudia@gmail.com">
         <span class="label">Email</span>
         <span class="value">umesh.bhudia@gmail.com</span>
@@ -1528,57 +1777,59 @@
   ];
 
   const CASES = [
-    {company:'Eagle Eye', mono:'EE', logo:'eagleeye', role:'Marketing Consultant', duration:'2026', headline:'+11% ICP lead volume', tags:['ai','demand','seo'],
+    {company:'Eagle Eye', mono:'EE', logo:'eagleeye', role:'Marketing Consultant', duration:'2026', headline:'+11% ICP lead volume', tags:['demand','abm','ai','seo','growth'],
       narrative:'Launched an AEO/GEO content strategy and implemented Influ2 to lift qualified lead volume from ideal-customer-profile accounts.'},
-    {company:'Eagle Eye', mono:'EE', logo:'eagleeye', role:'Marketing Consultant', duration:'2026', headline:'Built the AI agent stack from scratch', tags:['ai','martech','branding','crm','content'],
+    {company:'Eagle Eye', mono:'EE', logo:'eagleeye', role:'Marketing Consultant', duration:'2026', headline:'Built the AI agent stack from scratch', tags:['abm','ai','content','martech','branding','crm'],
       narrative:'Built Claude-based MCPs and agents for persona research, messaging, brand assets and thought-leadership copy, wired into HubSpot, Monday and Canva. Rebuilt funnel reporting in Looker and reworked sales outreach with Gong Engage.'},
-    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'Owned HubSpot end to end', tags:['crm','demand','martech'],
+    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'Owned HubSpot end to end', tags:['demand','martech','crm'],
       narrative:'Took full ownership of HubSpot as the GTM engine: lead scoring, lifecycle stages, nurture workflows and sales system integrations, aligned to commercial growth targets.'},
-    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'+22% deal conversion', tags:['ai','demand','martech'],
+    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'+22% deal conversion', tags:['demand','ai','martech'],
       narrative:'Designed agentic automation in HubSpot Breeze and Make.com to model lead propensity, risk profile and deal velocity across the funnel.'},
-    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'+37% organic lead volume', tags:['ai','demand','seo'],
+    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'+37% organic lead volume', tags:['demand','ai','content','seo','growth'],
       narrative:'Built an AI-driven content and SEO programme using agents and Surfer SEO to generate and optimise pages at scale, improving SEO/AEO performance.'},
     {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'Real-time channel attribution', tags:['martech','data'],
       narrative:'Established UTM governance, campaign taxonomy standards and multi-channel attribution dashboards in HubSpot and GA4 for data-driven budget allocation.'},
-    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'Restructured a 3-region team', tags:['strategy','performance','abm'],
+    {company:'KSeye', mono:'KS', logo:'kseye', role:'Head of Marketing', duration:'2025–2026', headline:'33% of Tier 1 accounts to opportunity', tags:['demand','abm','ai','growth'],
+      narrative:'Designed an AI-driven ABM engine on a £200k total budget using intent data, custom GPTs, Apollo and LinkedIn for personalised outreach to key buying personas, with Tier 1 account playbooks pairing bespoke landing pages, whitepapers and campaign assets to individual stakeholder pain points.'},
+    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'Restructured a 3-region team', tags:['strategy','abm','performance'],
       narrative:'Restructured a team spanning NAM, EMEA and APAC to improve delivery, governance and optimisation of clients\' performance marketing and ABM campaigns.'},
-    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'Onboarding time cut 67 → 30 days', tags:['martech','digital','strategy','crm'],
+    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'Onboarding time cut 67 → 30 days', tags:['strategy','digital','martech','crm'],
       narrative:'Scoped and implemented CDP, CRM, CMS, tag management and integration infrastructure for 32 enterprise clients, improving scalability across global markets.'},
-    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'+22% closed-won rate', tags:['ai','demand','crm'],
+    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'+22% closed-won rate', tags:['demand','abm','ai','crm'],
       narrative:'Partnered with Sales to deploy AI-driven automation between Salesforce, HubSpot, LinkedIn and Demandbase, cutting the sales cycle from 67 to 30 days.'},
     {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'-18% cost, -47% CAC', tags:['strategy','martech','data'],
       narrative:'Architected a CDP/AI/BI data roadmap delivering KPI dashboards across sales, marketing and operations, driving cost reductions and CAC improvements of up to 47%.'},
-    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'+23% conversion', tags:['ai','digital','strategy'],
+    {company:'Randstad', mono:'RS', logo:'randstad', role:'Global Head of Digital & Operations', duration:'2023–2024', headline:'+23% conversion', tags:['strategy','ai','digital'],
       narrative:'Engineered AI-powered personalisation using tag management and attribute segmentation to deliver intent-driven messaging across the funnel.'},
-    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'Reversed a declining market share', tags:['strategy','branding'],
+    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'Reversed a declining market share', tags:['strategy','content','branding','growth'],
       narrative:'Led a full brand repositioning across 31 countries: ICPs, value propositions, GenAI-driven thought leadership content, social listening and PR.'},
-    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'+90% organic traffic', tags:['martech','seo','gtm'],
+    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'+90% organic traffic', tags:['martech','gtm','seo'],
       narrative:'Ran a 36-domain site migration and CMS/SEO overhaul as one of three critical initiatives delivered with a 16-person team, alongside the rebrand and a MarTech/GTM transformation.'},
-    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'+39% MQLs · +17% revenue', tags:['strategy','demand','ai','digital'],
+    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'+39% MQLs · +17% revenue', tags:['strategy','demand','ai','digital','growth'],
       narrative:'Built a top-down global marketing strategy — CX overhauls, MarTech roadmaps, growth initiatives — and drove adoption through change programmes and upskilling.'},
-    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'NPS 14 → 29 in 6 months', tags:['branding','digital'],
+    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'NPS 14 → 29 in 6 months', tags:['digital','branding'],
       narrative:'Led the Liferay re-platform and rebrand across 31 countries and 36 languages, including launch of new online learning products.'},
-    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'Highest MQL volume in company history', tags:['performance','demand'],
+    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'Highest MQL volume in company history', tags:['demand','performance','growth'],
       narrative:'Optimised the performance marketing mix — job boards, SEO, CRM, PPC, social, display, programmatic, events — cutting CAC 16% and lifting ROAS 12%. Revamped Market Insight and Salary Benchmark campaigns to +47% MQLs vs prior year.'},
     {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'MarTech stack owner', tags:['ai','martech'],
       narrative:'Built the AI/MarTech architecture and led implementation of Salesforce, Tealium CDP, Liferay DXP, Optimizely, Crazy Egg and Google 360 across the business.'},
     {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'+45% new revenue · +89% profit', tags:['strategy','demand','abm'],
       narrative:'Led the Client Management & Solutions division, developing ABM, automation and process changes enabling faster campaign and product rollout for 350+ clients.'},
-    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'5x enterprise pipeline', tags:['demand','abm','strategy'],
+    {company:'Hays', mono:'HY', logo:'hays', role:'Global Head of Growth', duration:'2020–2023', headline:'5x enterprise pipeline', tags:['strategy','demand','abm','growth'],
       narrative:'Built and scaled a global Tier 1-to-3 ABM programme (Demandbase, intent data, custom lead scoring), growing enterprise pipeline from 11% to 30% of the total.'},
     {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'Team of 14 across 30 markets', tags:['strategy','branding'],
       narrative:'Managed performance marketing, trade and content specialists across international markets, reporting into the global ecommerce leadership team.'},
-    {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'£2m profit · India share 5% → 8%', tags:['strategy','performance'],
+    {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'£2m profit · India share 5% → 8%', tags:['strategy','performance','growth'],
       narrative:'Delivered double-digit sales growth and doubled ecommerce penetration to 6% while growing India\'s contribution to the business.'},
-    {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'+29% revenue via MMM', tags:['performance','data'],
+    {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'+29% revenue via MMM', tags:['performance','data','growth'],
       narrative:'Launched media mix modelling, clickstream and LTV analysis to upweight high-ROI channels, lifting ROAS 16% through new agencies and MarTech (Adobe Analytics, Salesforce).'},
     {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'+23% conversion · +18% UPT', tags:['digital','martech'],
       narrative:'Improved on-site search and recommendation rules, and rolled out free returns, local returns points and in-store refunds across international markets.'},
-    {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'12 weeks → 4 · £1.4M incremental revenue', tags:['digital','strategy','martech'],
+    {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'12 weeks → 4 · £1.4M incremental revenue', tags:['strategy','digital','martech','growth'],
       narrative:'Redesigned the international site-launch process, cutting time-to-market from 12 to 4 weeks. That freed capacity for 5 unplanned country launches and saved £700k directly.'},
     {company:'Marks & Spencer', mono:'M&S', logo:'ms', role:'Ecommerce / Head of Marketing', duration:'2019', headline:'£0.7m saved on platform migration', tags:['digital','martech'],
       narrative:'Led the Ireland platform migration from Demandware to Salesforce Commerce Cloud, improving customer experience while cutting cost.'},
-    {company:'Pomelo Pay', mono:'PP', logo:'pomelo', role:'Marketing Consultant', duration:'2018', headline:'+16% new customers', tags:['demand','gtm','branding'],
+    {company:'Pomelo Pay', mono:'PP', logo:'pomelo', role:'Marketing Consultant', duration:'2018', headline:'+16% new customers', tags:['demand','gtm','branding','growth'],
       narrative:'Led GTM, branding and lead-gen strategy for a SaaS payments platform, building mobile-first acquisition campaigns.'},
     {company:'Pomelo Pay', mono:'PP', logo:'pomelo', role:'Marketing Consultant', duration:'2018', headline:'Site + analytics built from zero', tags:['digital','martech'],
       narrative:'Designed and launched the site on WordPress, implementing Google Analytics, funnel reporting, goal tracking and live chat.'},
@@ -1586,31 +1837,33 @@
       narrative:'Migrated Mailchimp to Intercom and built automated multi-channel (email, push, SMS, in-app) eCRM campaigns.'},
     {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'3-part transformation programme', tags:['strategy','branding','crm'],
       narrative:'Partnered with the Board and CEO on a rebrand combining 5 brands, a MarTech transformation for real-time personalisation, and a CRM overhaul upskilling 80+ sales staff.'},
-    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'2x candidate pipeline', tags:['demand','crm','strategy'],
+    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'2x candidate pipeline', tags:['strategy','demand','abm','crm','growth'],
       narrative:'Built lead tracking, scoring and CRM workflows that doubled candidate pipelines, lifted hiring conversion 19% and cut time-to-hire 18%.'},
+    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing', duration:'2016–2018', headline:'+29% revenue from enterprise accounts', tags:['abm','crm','data','growth'],
+      narrative:'Shifted lead qualification to an account-based model with intent-triggered ABM and CRM automation on Segment CDP and Blueshift, lifting traffic 28% and cutting churn 34%.'},
     {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'+167% PPC · +94% SEO efficiency', tags:['performance','seo'],
       narrative:'Improved CPA across paid and organic search while growing social followers 433% on X and 150% on LinkedIn.'},
     {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'-34% churn via AI targeting', tags:['ai','martech','crm'],
       narrative:'Integrated Segment CDP and Blueshift to trigger AI-driven candidate engagement campaigns, lifting open rates 27% and leads 20%.'},
-    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'+159% conversion', tags:['digital','performance'],
+    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'+159% conversion', tags:['performance','digital','growth'],
       narrative:'Ran a CRO/UX improvement programme that grew monthly traffic 102% and new customers 111%.'},
-    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'20k leads from one campaign', tags:['branding','content','agency'],
+    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'20k leads from one campaign', tags:['content','branding','agency'],
       narrative:'Launched the Digital Salary Guide content and PR campaign, generating 20k leads and 17k new customers, and negotiated £60k savings across 16 supplier contracts.'},
-    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'£521k saved · +27% revenue p.a.', tags:['strategy','pnl'],
+    {company:'We Are Aspire', mono:'WA', logo:'aspire', role:'Head of Marketing (Fractional)', duration:'2016–2018', headline:'£521k saved · +27% revenue p.a.', tags:['strategy','pnl','growth'],
       narrative:'Delivered a cost saving alongside sustained annual revenue growth across the transformation programme.'},
-    {company:'Hubbul', mono:'HB', logo:'hubbul', role:'Marketing Consultant', duration:'2015–2016', headline:'0 → 2,000 leads in 3 weeks', tags:['demand','crm'],
+    {company:'Hubbul', mono:'HB', logo:'hubbul', role:'Marketing Consultant', duration:'2015–2016', headline:'0 → 2,000 leads in 3 weeks', tags:['demand','crm','growth'],
       narrative:'Launched a subscription recruitment engine from zero, building the MarTech stack (Salesforce, Segment, Optimizely, Blueshift) and automated web scraping and CRM messaging.'},
     {company:'Hubbul', mono:'HB', logo:'hubbul', role:'Marketing Consultant', duration:'2015–2016', headline:'+34% cold lead conversion', tags:['performance'],
       narrative:'Ran structured A/B testing on subject lines, creative and value propositions to lift conversion on cold outreach.'},
     {company:'Hubbul', mono:'HB', logo:'hubbul', role:'Marketing Consultant', duration:'2015–2016', headline:'Deloitte-certified 5-year plan', tags:['strategy','pnl'],
       narrative:'Built a 5-year P&L, KPI and target plan used for channel optimisation, forecasting and external fundraising.'},
-    {company:'EVEN Card', mono:'EV', logo:'evencard', role:'Marketing / Ecommerce Director', duration:'2015', headline:'+18% conversions · -31% churn', tags:['crm','martech','performance'],
+    {company:'EVEN Card', mono:'EV', logo:'evencard', role:'Marketing / Ecommerce Director', duration:'2015', headline:'+18% conversions · -31% churn', tags:['performance','martech','crm','growth'],
       narrative:'Overhauled customer journeys, UX, CRM and automation on HubSpot, lifting deposits 22% and card usage 12% while cutting churn.'},
-    {company:'EVEN Card', mono:'EV', logo:'evencard', role:'Marketing / Ecommerce Director', duration:'2015', headline:'8 days to fix a 4-month problem', tags:['performance','data'],
+    {company:'EVEN Card', mono:'EV', logo:'evencard', role:'Marketing / Ecommerce Director', duration:'2015', headline:'8 days to fix a 4-month problem', tags:['performance','data','growth'],
       narrative:'Resolved tracking and attribution issues that had gone unfixed for 4 months, then grew traffic 39% and sign-ups 26% per month while cutting CPA from £250 to £14.'},
     {company:'Cigna Corporation', mono:'CG', logo:'cigna', role:'Head of Ecommerce & Marketing', duration:'2014–2015', headline:'New B2C proposition across 29 countries', tags:['strategy','gtm'],
       narrative:'Designed the target operating model and GTM plan for a new B2C proposition, rolled out to 29 countries and B2B partners including AA, RAC, Saga and LBG.'},
-    {company:'Cigna Corporation', mono:'CG', logo:'cigna', role:'Head of Ecommerce & Marketing', duration:'2014–2015', headline:'Conversion 2.7% → 4.8%', tags:['performance'],
+    {company:'Cigna Corporation', mono:'CG', logo:'cigna', role:'Head of Ecommerce & Marketing', duration:'2014–2015', headline:'Conversion 2.7% → 4.8%', tags:['performance','growth'],
       narrative:'Cut PPC CPA from £250 to £60 while increasing monthly sales by roughly 200 units.'},
     {company:'Cigna Corporation', mono:'CG', logo:'cigna', role:'Head of Ecommerce & Marketing', duration:'2014–2015', headline:'£500k annual savings', tags:['digital','pnl'],
       narrative:'Directed a digital transformation programme covering vendor selection and integrations, delivering savings through automation and process optimisation.'},
@@ -1620,29 +1873,29 @@
       narrative:'Brokered publisher and network media deals and launched campaigns lifting CTR 26%, traffic 23% and conversion 17%.'},
     {company:'Family Brands', mono:'FB', role:'Ecommerce Director', duration:'2013–2014', headline:'Proprietary feed automation', tags:['martech'],
       narrative:'Scoped and implemented a custom product feed and CMS solution that eliminated errors in SKU uploads.'},
-    {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'+139% app downloads', tags:['performance','digital','crm'],
+    {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'+139% app downloads', tags:['performance','digital','crm','growth'],
       narrative:'Transformed mobile acquisition, journeys and CRM strategy, lifting registrations 65% against target and revenue 31% year on year.'},
     {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'£12M plan in 21 days', tags:['strategy','performance'],
       narrative:'Built a full BTL and ATL media plan — SEO, display, affiliates, paid, social, print, TV — within the first three weeks of the role.'},
-    {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'£200k saved on media spend', tags:['data','performance','pnl'],
+    {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'£200k saved on media spend', tags:['performance','data','pnl'],
       narrative:'Designed an omni-channel customer profiling model for personalised offers, cited as a key achievement in the CEO\'s quarterly update, and built a tracking and reporting model that saved £200k through media spend optimisation.'},
-    {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'Recovered mobile market share', tags:['performance'],
+    {company:'Ladbrokes', mono:'LD', logo:'ladbrokes', role:'Head of Marketing & Trading (Mobile)', duration:'2012–2013', headline:'Recovered mobile market share', tags:['performance','growth'],
       narrative:'Grew mobile market share 22% after a drop from 2nd to 7th in the market, while cutting display cost-of-signup 46%.'},
-    {company:'Accessories Direct', mono:'AD', logo:'accessoriesdirect', role:'Head of Ecommerce', duration:'2012', headline:'-44% overheads, +16% revenue/mo', tags:['strategy','pnl'],
+    {company:'Accessories Direct', mono:'AD', logo:'accessoriesdirect', role:'Head of Ecommerce', duration:'2012', headline:'-44% overheads, +16% revenue/mo', tags:['strategy','pnl','growth'],
       narrative:'Took full P&L ownership, streamlining overheads while growing monthly revenue and managing a team of 7.'},
     {company:'Accessories Direct', mono:'AD', logo:'accessoriesdirect', role:'Head of Ecommerce', duration:'2012', headline:'+335% PPC ROI', tags:['performance','agency'],
       narrative:'Brought in a new search agency and affiliate network, lifting PPC ROI 335% and affiliate sales 233%.'},
-    {company:'Accessories Direct', mono:'AD', logo:'accessoriesdirect', role:'Head of Ecommerce', duration:'2012', headline:'+157% eCRM sales', tags:['crm','martech'],
+    {company:'Accessories Direct', mono:'AD', logo:'accessoriesdirect', role:'Head of Ecommerce', duration:'2012', headline:'+157% eCRM sales', tags:['martech','crm'],
       narrative:'Built loyalty and segmentation programmes that grew eCRM-driven sales significantly.'},
-    {company:'Alpari (UK)', mono:'AP', logo:'alpari', role:'Global Marketing & Website Manager', duration:'2011–2012', headline:'£500k → £5.5M budget', tags:['performance','pnl'],
+    {company:'Alpari (UK)', mono:'AP', logo:'alpari', role:'Global Marketing & Website Manager', duration:'2011–2012', headline:'£500k → £5.5M budget', tags:['performance','pnl','growth'],
       narrative:'Scaled PPC spend across 8 websites in 15 countries, cutting CPA 66% and CPC 32% quarter on quarter while growing leads 17% and new accounts 5% per month.'},
-    {company:'Alpari (UK)', mono:'AP', logo:'alpari', role:'Global Marketing & Website Manager', duration:'2011–2012', headline:'#1 ranking for "UK forex broker"', tags:['seo','performance'],
+    {company:'Alpari (UK)', mono:'AP', logo:'alpari', role:'Global Marketing & Website Manager', duration:'2011–2012', headline:'#1 ranking for "UK forex broker"', tags:['performance','seo'],
       narrative:'Grew SEO traffic 22% and secured top rankings for core terms within 2 months of a product launch.'},
     {company:'Alpari (UK)', mono:'AP', logo:'alpari', role:'Global Marketing & Website Manager', duration:'2011–2012', headline:'£150k saved via in-house PPC', tags:['performance','agency'],
       narrative:'Built the business case to bring PPC in-house and implement Marin bid management, alongside a £300k contract renegotiation saving.'},
     {company:'Alpari (UK)', mono:'AP', logo:'alpari', role:'Global Marketing & Website Manager', duration:'2011–2012', headline:'+30% conversion via UX redesign', tags:['digital','agency'],
       narrative:'Ran the RFP for Coremetrics and SugarCRM and redefined the site UX to lift conversion.'},
-    {company:'Signet Group', mono:'SG', logo:'signet', role:'Head of Ecommerce', duration:'2009–2011', headline:'+17% online revenue', tags:['strategy','pnl'],
+    {company:'Signet Group', mono:'SG', logo:'signet', role:'Head of Ecommerce', duration:'2009–2011', headline:'+17% online revenue', tags:['strategy','pnl','growth'],
       narrative:'Ran ecommerce and online marketing for H.Samuel and Ernest Jones — the UK\'s two largest jewellery retailers — on a £3m budget with a team of 5.'},
     {company:'Signet Group', mono:'SG', logo:'signet', role:'Head of Ecommerce', duration:'2009–2011', headline:'+32% conversion · +13% AOV', tags:['digital'],
       narrative:'Used Maxymiser testing and merchandising collaboration to lift conversion and average order value across both brands.'},
@@ -1650,7 +1903,7 @@
       narrative:'Grew affiliate sales 41% (H.Samuel) and 60% (Ernest Jones) in year one, with further growth the following year, while cutting affiliate cost-of-sale 23%.'},
     {company:'LOVEFiLM UK', mono:'LF', logo:'lovefilm', role:'Search Marketing Manager', duration:'2008–2009', headline:'PPC account: 8k → 250k keywords', tags:['performance','agency'],
       narrative:'Coordinated a new search agency, Omniture and CMS implementation, expanding the paid search account by 30x.'},
-    {company:'Euromoney plc', mono:'EM', logo:'euromoney', role:'Online Marketing Manager', duration:'2007–2008', headline:'Trebled leads and sales in 4 months', tags:['demand','strategy'],
+    {company:'Euromoney plc', mono:'EM', logo:'euromoney', role:'Online Marketing Manager', duration:'2007–2008', headline:'Trebled leads and sales in 4 months', tags:['strategy','demand','growth'],
       narrative:'Transformed lead generation, sales and website processes, and launched metalbulletinstore.com to £1m in year-one sales.'},
   ];
 
@@ -1713,7 +1966,10 @@
     if (activeFilters.has(key)) activeFilters.delete(key);
     else activeFilters.add(key);
     renderCases();
-    document.getElementById('work').scrollIntoView({behavior:'smooth', block:'start'});
+    // Aim at the filter panel, not the whole #work section, so the chip row
+    // and the result count are both in view when the cards re-render.
+    const target = document.getElementById('filters') || document.getElementById('work');
+    target.scrollIntoView({behavior:'smooth', block:'start'});
   }
 
   function resetFilters(){
@@ -1804,7 +2060,7 @@
           {"@type":"Offer","itemOffered":{"@type":"Service","name":"Fractional CMO"}},
           {"@type":"Offer","itemOffered":{"@type":"Service","name":"B2B Demand Generation"}},
           {"@type":"Offer","itemOffered":{"@type":"Service","name":"Account Based Marketing"}},
-          {"@type":"Offer","itemOffered":{"@type":"Service","name":"MarTech and Revenue Operations"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"MarTech and Marketing Operations"}},
           {"@type":"Offer","itemOffered":{"@type":"Service","name":"Interim CMO"}}
         ]
       }
@@ -1814,7 +2070,7 @@
       "@id": "https://ubhudia.github.io/portfolio/#faq",
       "mainEntity": [
     {"@type":"Question","name":"What is a fractional CMO?","acceptedAnswer":{"@type":"Answer","text":"A fractional CMO is a senior marketing leader who works part time inside your business, usually one day a week on a retainer. They set marketing strategy, direct the internal team and agencies, and carry accountability for the commercial outcome. Unlike a consultant, they stay to implement rather than delivering recommendations and leaving."}},
-    {"@type":"Question","name":"How much does a fractional CMO cost in the UK?","acceptedAnswer":{"@type":"Answer","text":"My day rate is \u00a3750 for retained fractional work, which puts one day a week at around \u00a33,250 a month. A permanent B2B CMO costs around \u00a3185,000 a year fully loaded once employer NI, pension, bonus, overheads and recruitment fees are included, which works out at roughly \u00a3845 per productive day after holiday and sickness are removed."}},
+    {"@type":"Question","name":"How much does a fractional CMO cost in the UK?","acceptedAnswer":{"@type":"Answer","text":"My day rate is \u00a3750 for retained fractional work, which puts one day a week from \u00a33,000 a month. A permanent CMO on a \u00a3110,000 base costs around \u00a3163,850 a year once bonus, employer NI, pension, overheads and recruitment fees are added, which works out at roughly \u00a3748 per productive day after holiday and sickness are removed."}},
     {"@type":"Question","name":"How is a fractional CMO different from a marketing agency?","acceptedAnswer":{"@type":"Answer","text":"An agency executes against a brief. A fractional CMO writes the brief. The fractional CMO sits inside the leadership team, sets strategy across the whole funnel and stack, directs agencies and is accountable for commercial outcomes rather than deliverables. The two are complementary, and most of my engagements keep the incumbent agency in place."}},
     {"@type":"Question","name":"Is one day a week really enough?","acceptedAnswer":{"@type":"Answer","text":"For most businesses between \u00a35m and \u00a375m in revenue, yes, provided execution capacity exists internally or through agencies. The value comes from direction, prioritisation and unit economics rather than volume of hours. If daily hands-on execution is what you need, a marketing manager is the right hire and I will help you write the spec."}},
     {"@type":"Question","name":"How long does an engagement last?","acceptedAnswer":{"@type":"Answer","text":"Typically six to eighteen months. Long enough to fix the qualification model, prove the change in pipeline, and build or hire the internal capability that eventually replaces the role."}},
