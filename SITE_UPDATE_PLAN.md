@@ -142,3 +142,22 @@ The split improves ranking potential. It does not measure or convert.
 3. `MasterCV.md`, `Portfolio_Case_Study_Review_v5.xlsx`, `retag.py`, `apply_retag.py`, `make_v5.py`.
 4. Which analytics tool, if any.
 5. Whether I should start with Steps 1 and 2 now. They are safe on the current site and need no other decision.
+
+---
+
+## 8. Protecting wording and results from copying
+
+**Decision (16 Oct 2026):** the concern is ex-colleagues lifting wording and results for their own CVs or sites. The repo is private, so source files, the spreadsheet and MasterCV are not exposed. The published site is public by design and cannot be hidden from one group.
+
+| # | Action | When | Effect on SEO | Effort |
+|---|---|---|---|---|
+| 1 | **Keep MasterCV, spreadsheet and scripts in the private repo only.** Confirm none is inside the published folder. Pages publishes everything in the published branch, even from a private repo | Now | None | Low |
+| 2 | **Detection.** Add a short, unusual but true sentence to each of the 6 featured studies (no new metrics, no invented facts). Set Google Alerts on those exact phrases and on the strongest headline figures plus company names | Now | None | Low |
+| 3 | **Dated evidence of authorship.** Commit history and the Wayback Machine capture show the wording existed first. Add the site URL to Wayback Machine "Save Page Now" after each publish. Add a copyright line with the year to the footer | Now | None | Low |
+| 4 | **Thin the featured studies at the split.** Keep the headline, results table and one paragraph of context public. Move problem, method and "what transfers" to the call or a request page | At Step 6 | Medium loss on 6 URLs | Medium |
+| 5 | **Leave the 64 cards public.** They are short outcome lines and carry the long-tail text | | None | None |
+| 6 | **AI training bots.** Optionally disallow GPTBot, CCBot and Google-Extended in `robots.txt`. Keep search and answer-engine bots allowed so FAQ schema still gets cited | At Step 1 | Low | Low |
+
+**Not worth doing:** disabling right-click, blocking text selection or obfuscating the HTML. A colleague can still copy by hand, and these hurt accessibility.
+
+**If action 4 adds a request form:** the privacy policy needs a new row in section 2 and the form processor added to section 5 (rule 6).
