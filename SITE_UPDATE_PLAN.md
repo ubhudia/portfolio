@@ -1,163 +1,144 @@
-# Site Update Plan: single page to multi-page Jekyll
+# Site Plans: employer portfolio and gtmdemand.com
 
-**Status date:** 8 October 2026
-**Replaces:** `NEW_CHAT_BRIEF.md` and `PAGE_SPLIT_MAP.md` where they conflict with this file.
-**Checked against:** the live `index.html` (1.36MB, identical to `index.html` in this repo), `privacy.html`, `build_v4.py` and `README_Portfolio_System.md`.
+**Status date:** 20 October 2026
+**Replaces:** the earlier single plan, `NEW_CHAT_BRIEF.md` and `PAGE_SPLIT_MAP.md` where they conflict.
 
-**Scope note.** The original audit and growth plan chat was not in the upload, only the files above. This plan is rebuilt from the brief, the split map and the current HTML. If the chat held decisions not repeated in those files, send it and I will reconcile.
+**Direction (agreed 20 October 2026):**
 
----
-
-## 1. What the latest content changed
-
-| # | Item | Old plan said | Live site shows | Action |
-|---|---|---|---|---|
-| 1 | Case cards | 62 (split map, rule 6) | **64** (`kseye-05`, `weareaspir-03` added) | Use 64 everywhere. Static `filterCount` text must read 64 |
-| 2 | Tags | 15 | **16** (`growth` added, 25 cards) | Update `SKILLS`, chips, spreadsheet. `gtm` is still thinnest at 3 |
-| 3 | Total URLs | 21 | **22** (adds `/privacy/`) | Add `privacy.html` to sitemap and split map |
-| 4 | Embedded images | "16 logos" | **20 data URIs**: 16 logos, 1 nav logo, 3 favicon/apple-touch icons | Extract all 20, not 16 |
-| 5 | Logo file type | `/assets/logos/*.png` | 12 PNG, 2 JPEG (`ladbrokes`, `accessoriesdirect`), 1 WebP (`euromoney`) | Write each with its real extension. Do not force `.png` |
-| 6 | Logo size | not mentioned | `ms` 3840x2160 (255KB), `pomelo` 3840x2160 (64KB), `hays` 2114x1064 (72KB), `signet` 2290x612 (78KB), shown at about 48px | Resize on extraction. Cap long edge at 192px (2x display). |
-| 7 | Booking | cal.com links, leave alone | 30 minute slot, 10 links, `#contact` no longer used as CTA | Keep. Grep the URL, never hand-edit |
-| 8 | Nav | Services, Case Studies, Approach, Rates, FAQ | **Services, Case Studies, How It Works, Rates, Insights, FAQ** | Header include uses the 6 current links |
-| 9 | Anchor links | "roughly 20" | **9 anchors, 6 distinct** (`#rates` x3, `#work` x2, `#services`, `#model`, `#insights`, `#faq`) | Smaller job than planned. Map in section 3 |
-| 10 | Hard-coded base URL | not mentioned | `ubhudia.github.io/portfolio` appears **13 times** (canonical, OG, Twitter, JSON-LD) | Replace with `{{ site.url }}{{ site.baseurl }}{{ page.url }}` |
-| 11 | Privacy policy | not in plan | Standalone, claims no cookies, analytics, forms or storage | Move into layout. Keep claims true (see section 5) |
-| 12 | Files named in the brief | `retag.py`, `apply_retag.py`, `make_v5.py`, `MasterCV.md`, `Portfolio_Case_Study_Review_v5.xlsx` | **Not in the upload.** Only `build_v4.py` is there | Send them before Step 7 (CI) |
-| 13 | Repo `README.md` | n/a | Out of date: says 15 tags, 62 cards, "no booking link". The zip copy is current | Replace repo README with `README_Portfolio_System.md` |
-| 14 | `sitemap.xml` | 1 URL | 1 URL, `lastmod` 2026-08-18, no `privacy.html` | Update now, before any split |
-| 15 | `robots.txt` | root of `ubhudia.github.io` | In this repo it sits in `/portfolio/`, where crawlers ignore it | Move to the user-site repo, or to the custom domain root |
-| 16 | Crawlable words | about 10,000 | **10,551** | Baseline for the post-split comparison |
-
----
-
-## 2. Decision needed before any code
-
-The two source documents disagree on order.
-
-| Option | Sequence | Pros | Cons | Impact |
-|---|---|---|---|---|
-| **A. Domain first (recommended)** | Buy domain, set `CNAME`, verify in Search Console and Bing, wait 4 to 6 weeks, then split | Authority builds on the final URL. No redirects later. `baseurl` is empty, so links are simpler | Delays the 21 new pages that target specific keywords | Slower start, no rework |
-| B. Split now on github.io | Start Step 1 from the brief | New keyword pages indexed sooner | Authority built on `github.io/portfolio` is lost or needs 301s on a host that cannot redirect. `baseurl: /portfolio` then has to be undone | Faster start, rework later |
-
-The split map says "Do not split yet. Publish, buy a domain, then split". The brief's open items say the domain was deferred deliberately. The brief's Step 1 starts the split anyway. These cannot both stand.
-
-**Recommendation: A.** It is now 7 weeks since the August publish. If the domain is bought this week, the 4 to 6 week index window ends in mid-November.
-
-**What can happen now under either option** (no authority is split):
-1. Update `sitemap.xml` and add `privacy.html`.
-2. Move `robots.txt` to a location crawlers read.
-3. Extract and resize logos into `/assets/logos/` and replace the hydration JS (Step 1 below). This also cuts the single page from 1.36MB to under 0.3MB of HTML plus cached image files.
-4. Replace the repo README.
-
-Item 3 changes no URL and no content, so it is safe on the current site.
-
-**Need from you:** A or B, and the domain name if A.
-
----
-
-## 3. Target structure: 22 URLs
-
-| URL | Source in `index.html` | Anchor links that point here |
-|---|---|---|
-| `/` | `header.hero`, ticker, teasers | |
-| `/about/` | `#summary` (`data-page="about"`) | |
-| `/services/` | `#services` intro and 4 cards | `#services` |
-| `/services/demand-generation/` | card 01 `details.sdeep` | |
-| `/services/account-based-marketing/` | card 02 `details.sdeep` | |
-| `/services/martech/` | card 03 `details.sdeep` | |
-| `/services/interim-cmo/` | card 04 `details.sdeep` | |
-| `/case-studies/` | `#work`, `#skills`, `#filters`, 64 static cards | `#work` |
-| `/case-studies/{slug}/` x 6 | `details.fcase`: Hays, Randstad, KSeye, M&S, Cigna, We Are Aspire | |
-| `/fractional-cmo/` | `#model` + `#approach` + `#faq` | `#model`, `#faq` becomes `/fractional-cmo/#faq` |
-| `/rates/` | `#rates` | `#rates` |
-| `/insights/` | `#insights` intro | `#insights` |
-| `/insights/{slug}/` x 4 | `mql-wrong-unit`, `abm-year-one`, `brief-not-agency`, `ai-what-worked` | |
-| `/privacy/` | `privacy.html` | footer link |
-
-Count: 1 + 1 + 1 + 4 + 1 + 6 + 1 + 1 + 1 + 4 + 1 = **22**.
-
-Two things the old map missed:
-- `#skills` and `#filters` sit inside `#work` and belong on `/case-studies/`. The JS in `toggleFilter()` scrolls to `#filters`, so it must stay on the same page as the chips.
-- `#approach` has no inbound anchor of its own. Merge it into `/fractional-cmo/` after `#model` and keep the id.
-
-**Target keywords** are unchanged from `PAGE_SPLIT_MAP.md`. Add `/privacy/` with no target keyword and let it be indexed.
-
----
-
-## 4. Steps, in order
-
-| Step | Action | Safe before domain? | Check |
+| Site | Home | Audience | Job |
 |---|---|---|---|
-| 0 | Send the missing files (row 12 above). Confirm A or B | Yes | |
-| 1 | Update `sitemap.xml` (add `privacy.html`, new `lastmod`). Move `robots.txt`. Replace repo `README.md` | Yes | `curl` both files after deploy |
-| 2 | Extract 20 images to `/assets/` with real extensions. Resize logos to 192px max. Replace hydration JS with `<img src width height loading="lazy" alt>` written by the card generator. Point nav logo and 3 icons at files | Yes | 0 `data:image` left in HTML. HTML under 0.3MB. Logos render. Filter still changes count |
-| 3 | Buy domain, `CNAME`, DNS, verify Search Console and Bing | Option A only | Site live on new domain over HTTPS |
-| 4 | Wait 4 to 6 weeks (Option A) | | Indexed pages and impressions recorded as baseline |
-| 5 | Jekyll scaffold. `baseurl` is `""` on a custom domain, `/portfolio` on github.io. **Check first** | | Every link and asset resolves |
-| 6 | Split by `data-page`. Content is already written | | 22 pages build |
-| 7 | Convert the 9 anchors. Replace the 13 hard-coded base URLs | | `grep 'href="#'` and `grep github.io` return nothing |
-| 8 | Per-page `<title>`, description, self-referencing canonical, OG tags | | No two titles match |
-| 9 | Schema: `Person` and `ProfessionalService` in layout. `FAQPage` on `/fractional-cmo/` only. Optional `Article` on the 4 insights | | JSON-LD parses. FAQ schema matches visible FAQ (12) |
-| 10 | Sitemap with 22 URLs. Submit to both consoles | | |
-| 11 | GitHub Actions: spreadsheet push rebuilds pages | | Needs the missing scripts. Fails the build if rules 1 to 5 below break |
+| **A. Portfolio** | `ubhudia.github.io/portfolio` (this repo, private repo, public Pages site) | Employers and recruiters, by link | Proof of work for job applications |
+| **B. Agency site** | `gtmdemand.com` (purchased) | Buyers of fractional CMO and agency services | Case studies, services, rates, inbound enquiries |
+
+The original audit and growth plan chat was not in the upload. Both plans are built from the brief, the split map, the live `index.html` and the decisions in this session.
 
 ---
 
-## 5. Rules that must hold (updated)
+# Plan A: Employer portfolio
 
-1. **64 case cards stay pre-rendered** between `CASE-CARDS:START` and `CASE-CARDS:END`. `CASES` is the source. No client-side rendering.
-2. **No duplicated image data.** After Step 2 this becomes: no base64 images anywhere.
-3. **`FAQPage` schema on `/fractional-cmo/` only.** 12 questions, matching the visible text.
-4. **No invented metrics.** Modelled pipeline figures (Hays £6.0m, Randstad £2.5m, KSeye £1.6m) stay off the site.
-5. **Build by script, not by hand.** No retyping large blocks.
-6. **Privacy policy must stay true.** It says no cookies, no analytics, no forms, no browser storage. Each of these breaks it:
-   - Search Console and Bing verification via meta tag or file: safe.
-   - Any analytics tag (GA4, Clarity, Plausible, pixels): update the policy in the same commit. Cookie-based tools also need a banner.
-   - The B2B Marketing Diagnostic lead magnet: adds a form, a lawful basis and a processor. Update section 2 and section 5.
-7. **Verify before delivering.** Balanced tags, 64 cards, no `data:image`, JSON-LD parses, headless render with zero errors, filter changes the count, 22 pages in the sitemap.
+## A1. State after this change
 
----
+| # | Item | State |
+|---|---|---|
+| 1 | Search visibility | `noindex, nofollow` on `index.html` and `privacy.html` |
+| 2 | `sitemap.xml`, `robots.txt` | Removed. A sitemap of noindex pages contradicts itself, and `robots.txt` inside `/portfolio/` was never read |
+| 3 | Working files | `_config.yml` excludes README, planning notes, scripts, spreadsheets and MasterCV from Pages |
+| 4 | Footer | "© 2026 Umesh Bhudia" on both pages |
+| 5 | Content | Unchanged: 64 cards, 16 tags, 6 featured studies, 12-question FAQ, cal.com 30 minute booking |
 
-## 6. Gaps in the growth plan itself
+**noindex hides the site from search only.** Anyone with the link can open it. To restrict it to people with a password, use Cloudflare Access or a Netlify password.
 
-The split improves ranking potential. It does not measure or convert.
+Do not add a `robots.txt` Disallow. Crawlers must fetch the page to see the noindex.
 
-| # | Gap | Why it matters | Pros of fixing | Cons | Next step |
-|---|---|---|---|---|---|
-| 1 | **No analytics** | After the split you cannot tell which of 22 pages earns calls | Real data for the 4 to 6 week review | Policy and possibly a banner change | Pick a cookieless tool. Update the policy in the same commit |
-| 2 | **No lead magnet** | Most visitors are not ready for a call | Captures the middle of the funnel | Adds a form, a processor and policy changes | Build after the split, not during |
-| 3 | **MasterCV §4.2 lacks the 33% KSeye figure** | Site holds a claim the master cannot back | Closes the only known traceability gap | None | Add the line to `MasterCV.md` |
-| 4 | **GTM tag at 3 cards** | Thinnest filter chip | Stronger chip if GTM is a priority | Needs verified new content | Ask whether GTM is a priority before adding |
-| 5 | **Family Brands has no logo** | One mono badge among 16 logos | Visual consistency | Needs the file | Ask for it |
-| 6 | **Card verification** | Not every card checked line by line against MasterCV | Lower claim risk | Time | Run the `Verified vs Master CV` column once the new MasterCV arrives |
-| 7 | **Rates unconfirmed** | £750 day, £3,250 / £6,000 / £4,500 are live | Avoids walking back a public price | None | Confirm before the `/rates/` page targets "fractional cmo cost uk" |
+## A2. To do
 
----
+| # | Task | Owner | Effort |
+|---|---|---|---|
+| 1 | Merge `claude/busy-hawking-rik0mj` into `main` so noindex and the exclude list go live | You | Low |
+| 2 | After deploy, open `/portfolio/README.md` in a browser. It should 404. If it loads, the exclude list is not applied and the modelled £ figures are public | You | Low |
+| 3 | Save the live URL to the Wayback Machine: `https://web.archive.org/save/https://ubhudia.github.io/portfolio/` (dated proof you wrote it first). Repeat after big updates | You | Low |
+| 4 | Google may take weeks to drop existing listings. For a faster removal, use Search Console's Removals tool, or check `site:ubhudia.github.io/portfolio` | You | Low |
+| 5 | Decide on the cut-down from the old action 4 (thin the featured studies): **dropped for this site**, since employers want the detail | Done | |
 
-## 7. What I need from you
+## A3. What no longer applies to this site
 
-1. **A or B** from section 2, and the domain name if A.
-2. The audit and growth plan chat, if it holds anything beyond the brief.
-3. `MasterCV.md`, `Portfolio_Case_Study_Review_v5.xlsx`, `retag.py`, `apply_retag.py`, `make_v5.py`.
-4. Which analytics tool, if any.
-5. Whether I should start with Steps 1 and 2 now. They are safe on the current site and need no other decision.
+The Jekyll split, 22 URLs, per-page SEO, FAQ schema placement and the sitemap move to Plan B. The FAQ and schema on this site are harmless and can stay.
+
+## A4. Keep true
+
+1. No invented metrics. Every figure traces to MasterCV.
+2. Modelled pipeline figures (Hays £6.0m, Randstad £2.5m, KSeye £1.6m) stay off the site and out of any served file.
+3. Privacy policy claims (no cookies, no analytics, no forms) must stay true.
+4. The 64 cards stay static HTML generated from `CASES`. Logos are hydrated from `LOGO_MAP` once.
 
 ---
 
-## 8. Protecting wording and results from copying
+# Plan B: gtmdemand.com agency site
 
-**Decision (16 Oct 2026):** the concern is ex-colleagues lifting wording and results for their own CVs or sites. The repo is private, so source files, the spreadsheet and MasterCV are not exposed. The published site is public by design and cannot be hidden from one group.
+## B1. Decisions to make first
 
-| # | Action | When | Effect on SEO | Effort |
-|---|---|---|---|---|
-| 1 | **Keep MasterCV, spreadsheet and scripts in the private repo only.** Confirm none is inside the published folder. Pages publishes everything in the published branch, even from a private repo | Now | None | Low |
-| 2 | **Detection.** Add a short, unusual but true sentence to each of the 6 featured studies (no new metrics, no invented facts). Set Google Alerts on those exact phrases and on the strongest headline figures plus company names | Now | None | Low |
-| 3 | **Dated evidence of authorship.** Commit history and the Wayback Machine capture show the wording existed first. Add the site URL to Wayback Machine "Save Page Now" after each publish. Add a copyright line with the year to the footer | Now | None | Low |
-| 4 | **Thin the featured studies at the split.** Keep the headline, results table and one paragraph of context public. Move problem, method and "what transfers" to the call or a request page | At Step 6 | Medium loss on 6 URLs | Medium |
-| 5 | **Leave the 64 cards public.** They are short outcome lines and carry the long-tail text | | None | None |
-| 6 | **AI training bots.** Optionally disallow GPTBot, CCBot and Google-Extended in `robots.txt`. Keep search and answer-engine bots allowed so FAQ schema still gets cited | At Step 1 | Low | Low |
+| # | Decision | Options | Recommendation |
+|---|---|---|---|
+| 1 | **Voice** | "I" (solo practitioner) or "we" (agency) | Match reality. If it is you alone, use "I" and say associates are drawn in as needed. Claiming a team that does not exist is a trust and legal risk |
+| 2 | **Where your name sits** | Prominent, or small in About | Prominent. Buyers hire the person, and "umesh bhudia" stays the brand search term |
+| 3 | **Repo** | New repo for `gtmdemand.com`, or a branch of this one | New repo. Keeps A noindex and B indexed with no cross-contamination |
+| 4 | **Case study depth** | Full detail, or headline + results table + one paragraph with the rest on the call | Open. Full detail ranks better. Cut-down reduces copyable method text. Your call at build time |
+| 5 | **Client logos** | Show past employer logos, or names only | Check. Hays, Randstad, M&S, Cigna and others as public logos can imply endorsement of an agency. Names in text with "worked at" framing is safer |
+| 6 | **Positioning terms** | Does "GTM Demand" lead with go-to-market, demand generation, or both | Both. "GTM" is the thinnest tag on this site (3 cards), so the wording needs support from the demand and growth cards |
 
-**Not worth doing:** disabling right-click, blocking text selection or obfuscating the HTML. A colleague can still copy by hand, and these hurt accessibility.
+## B2. Structure: 22 URLs as a starting point
 
-**If action 4 adds a request form:** the privacy policy needs a new row in section 2 and the form processor added to section 5 (rule 6).
+Revise after decision 1 and 6. The current content maps as follows.
+
+| URL | Source in `index.html` |
+|---|---|
+| `/` | Hero, ticker, teasers |
+| `/about/` | `#summary` |
+| `/services/` + 4 children (demand generation, ABM, MarTech, interim CMO) | `#services`, 4 `details.sdeep` |
+| `/case-studies/` + 6 children | `#work`, `#skills`, `#filters`, 64 cards, 6 `details.fcase` |
+| `/fractional-cmo/` | `#model`, `#approach`, `#faq` |
+| `/rates/` | `#rates` |
+| `/insights/` + 4 children | `#insights`, 4 `details.insight` |
+| `/privacy/` | `privacy.html` |
+
+Count: 1 + 1 + 5 + 7 + 1 + 1 + 5 + 1 = **22**.
+
+Anchor conversions (9 links, 6 distinct): `#rates` x3, `#work` x2, `#services`, `#model`, `#insights`, `#faq` (becomes `/fractional-cmo/#faq`). `#filters` stays on `/case-studies/`.
+
+Target keywords from `PAGE_SPLIT_MAP.md` stay, with "gtm demand" and "go-to-market" added to `/` and `/services/`.
+
+## B3. Steps
+
+| Step | Action | Check |
+|---|---|---|
+| 1 | Create the new repo. Add `CNAME` file containing `gtmdemand.com`. Set DNS: four A records for the apex (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) and a `www` CNAME to `ubhudia.github.io`. Enable HTTPS in Pages | Site loads on HTTPS. Confirm the IPs against GitHub's current Pages docs before setting them |
+| 2 | Extract the 20 base64 images to `/assets/` with real extensions (12 PNG, 2 JPEG, 1 WebP, plus nav logo and 3 icons). Resize logos to 192px max long edge | No `data:image` in HTML. HTML under 0.3MB |
+| 3 | Jekyll scaffold: `_config.yml` with `url: https://gtmdemand.com` and `baseurl: ""`, layouts, header and footer includes, 6 nav links | Every link and asset resolves |
+| 4 | Split by `data-page`. Keep 64 cards pre-rendered | 22 pages build |
+| 5 | Convert 9 anchors. Replace the 13 hard-coded `ubhudia.github.io/portfolio` URLs with `{{ site.url }}{{ page.url }}` | `grep 'href="#'` and `grep github.io` return nothing |
+| 6 | Per-page `<title>`, description, self-referencing canonical, Open Graph | No two titles match |
+| 7 | Schema: `Person` and `ProfessionalService` in the layout (update `ProfessionalService` name and URL for GTM Demand). `FAQPage` on `/fractional-cmo/` only, 12 questions matching the visible text | JSON-LD parses |
+| 8 | Add `robots.txt` at the domain root and a 22-URL `sitemap.xml`. Verify in Search Console and Bing Webmaster Tools, submit the sitemap | Both consoles show the sitemap read |
+| 9 | Add analytics only with a matching privacy policy change (see B4) | Policy and tag go in the same commit |
+| 10 | GitHub Actions: rebuild when `Portfolio_Case_Study_Review_v*.xlsx` changes | Needs `retag.py`, `apply_retag.py`, `make_v5.py` and the spreadsheet |
+| 11 | Mailbox on the domain (for example `umesh@gtmdemand.com`) | Add SPF, DKIM and DMARC records |
+
+Duplicate content is not a risk between the sites, because Plan A is noindex.
+
+## B4. Rules
+
+1. 64 cards stay pre-rendered. Never client-side render.
+2. No base64 images after Step 2.
+3. `FAQPage` schema on one page only.
+4. No invented metrics. Modelled figures stay off the site.
+5. Build by script, not by hand.
+6. **Privacy policy must stay true.** Analytics, a request form for gated case studies, or the diagnostic lead magnet each add a processor and a lawful basis. Update sections 1, 2 and 5 in the same commit.
+7. Verify before delivering: balanced tags, 64 cards, no `data:image`, JSON-LD parses, headless render with zero errors, filter changes the count, 22 pages in the sitemap.
+
+## B5. Open items
+
+| # | Item | Next step |
+|---|---|---|
+| 1 | MasterCV §4.2 lacks the 33% KSeye figure | Add the line to `MasterCV.md` |
+| 2 | Missing files for the rebuild: `MasterCV.md`, v5 spreadsheet, `retag.py`, `apply_retag.py`, `make_v5.py` | Send them |
+| 3 | No analytics | Choose a cookieless tool and update the policy |
+| 4 | No lead magnet | Build after launch; adds a form |
+| 5 | Rates (£750 day, £3,250 / £6,000 / £4,500) live on the current page | Confirm before `/rates/` goes public as an agency price list |
+| 6 | Family Brands has no logo | Send the file, or leave the mono badge |
+| 7 | Wording on shared work | Check the case studies say what you personally led |
+
+## B6. Protecting wording on the agency site
+
+The repo is private and the site will be public. Public text can be copied by anyone, so use detection rather than hiding:
+
+1. Add one short, true, unusual sentence to each featured case study, with no new claims. Set Google Alerts on those phrases.
+2. Save each release to the Wayback Machine and keep the copyright line with the year.
+3. Optionally block AI training bots (GPTBot, CCBot, Google-Extended) in `robots.txt`. Keep search and answer-engine bots allowed.
+4. Decision B1.4 covers whether to thin the featured studies.
+5. Do not disable right-click or obfuscate the HTML. It does not stop copying and hurts accessibility.
+
+## B7. What I need from you
+
+1. Answers to B1.1 to B1.6.
+2. The missing files in B5.2.
+3. Whether to use a new repo for B (recommended).

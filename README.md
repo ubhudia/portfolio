@@ -156,3 +156,12 @@ Repositioning from "here is my CV, filtered" to "here is a fractional CMO servic
 - Ticker stat: "-47% CAC at Randstad" → "-29% blended CAC at Randstad". 47% was the top of the by-channel range being presented as the headline figure.
 
 The 62 case cards' text and tags were **not** changed, so `Portfolio_Case_Study_Review_v4.xlsx` remains in sync and did not need regenerating.
+
+## Employer portfolio, not a search site (October 2026)
+
+This site is now an employer-facing portfolio. The agency and fractional service site is a separate build on `gtmdemand.com`; see `SITE_UPDATE_PLAN.md`.
+
+- `index.html` and `privacy.html` carry `<meta name="robots" content="noindex, nofollow">`. Do not add a `robots.txt` Disallow: crawlers must be able to fetch the page to see the noindex.
+- `sitemap.xml` and `robots.txt` were removed because a sitemap listing noindex pages contradicts itself, and `robots.txt` inside `/portfolio/` was never read by crawlers.
+- `_config.yml` excludes working files (this README, planning notes, scripts, spreadsheets) from the published site. Pages otherwise serves every file in the repo.
+- noindex only hides the site from search. Anyone with the link can still open it.
