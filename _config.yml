@@ -7,7 +7,9 @@ exclude:
   - NEW_CHAT_BRIEF.md
   - PAGE_SPLIT_MAP.md
   - README_Portfolio_System.md
+  - tools
   - "*.py"
+  - Portfolio_Case_Study_Review_v6.xlsx
   - "*.xlsx"
   - "*.csv"
   - MasterCV.md

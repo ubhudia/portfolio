@@ -7,10 +7,33 @@
 
 | Site | Home | Audience | Job |
 |---|---|---|---|
-| **A. Portfolio** | `ubhudia.github.io/portfolio` (this repo, private repo, public Pages site) | Employers and recruiters, by link | Proof of work for job applications |
+| **A. Portfolio** | `ubhudia.github.io/portfolio` (this repo; **currently 404** because the repo is private, see Decisions) | Employers and recruiters, by link | Proof of work for job applications |
 | **B. Agency site** | `gtmdemand.com` (purchased) | Buyers of fractional CMO and agency services | Case studies, services, rates, inbound enquiries |
 
 The original audit and growth plan chat was not in the upload. Both plans are built from the brief, the split map, the live `index.html` and the decisions in this session.
+
+---
+
+## Decisions and findings (20 October 2026)
+
+| # | Item | Outcome |
+|---|---|---|
+| 1 | Voice for the agency site | **"We"**. Say associates and partners are drawn in as needed, and do not claim a fixed team size |
+| 2 | Past employer logos on the agency site | **Text only.** Names in copy with "worked at" framing, no logos |
+| 3 | Case study depth on the agency site | **Less.** Headline, results table and one paragraph public. Problem, method and "what transfers" on the call |
+| 4 | Agency repo | `ubhudia/gtmdemand` (private, empty, created 20 Oct) |
+| 5 | MasterCV and the rebuild files | Rebuilt from the MasterCV Claude Doc (rev 408). `tools/build_v6.py` and `tools/Portfolio_Case_Study_Review_v6.xlsx` are in this repo, excluded from Pages. Pending your review |
+| 6 | **`ubhudia.github.io/portfolio/` returns 404** | **Cause: the repo is private.** `ubhudia/portfolio` has `has_pages: false` and its last Pages build was on 2 September, before it was made private. GitHub Pages on a private repo needs a paid plan, so Pages switched off. `gtmdemand` is private too and will hit the same limit |
+
+### Fix for the 404 (choose one)
+
+| Option | Pros | Cons | Cost |
+|---|---|---|---|
+| **A. GitHub Pro** | Keeps private repos, same URL, no migration. Covers `gtmdemand` too | Pages from a private repo is still a public site | About $4 a month (check current price) |
+| B. Make `portfolio` public again | Free, restores the site | Source, README and full history become public, including old README text with modelled £ figures | Free |
+| C. Host on Cloudflare Pages or Netlify from the private repo | Free, repo stays private, can add a password | New URL and setup. GitHub Pages `CNAME` for `gtmdemand.com` moves too | Free |
+
+Recommendation: **A**. One upgrade fixes both sites and keeps the repos private.
 
 ---
 
@@ -34,7 +57,8 @@ Do not add a `robots.txt` Disallow. Crawlers must fetch the page to see the noin
 
 | # | Task | Owner | Effort |
 |---|---|---|---|
-| 1 | Merge `claude/busy-hawking-rik0mj` into `main` so noindex and the exclude list go live | You | Low |
+| 0 | **Restore Pages** (see the fix for the 404). Until then the site is offline | You | Low |
+| 1 | Merge `claude/busy-hawking-rik0mj` into `main` so noindex and the exclude list go live. On GitHub: open the repo, click "Compare & pull request" on the banner for that branch, click "Create pull request", then "Merge pull request" | You | Low |
 | 2 | After deploy, open `/portfolio/README.md` in a browser. It should 404. If it loads, the exclude list is not applied and the modelled £ figures are public | You | Low |
 | 3 | Save the live URL to the Wayback Machine: `https://web.archive.org/save/https://ubhudia.github.io/portfolio/` (dated proof you wrote it first). Repeat after big updates | You | Low |
 | 4 | Google may take weeks to drop existing listings. For a faster removal, use Search Console's Removals tool, or check `site:ubhudia.github.io/portfolio` | You | Low |
