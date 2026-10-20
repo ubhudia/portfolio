@@ -1,0 +1,16 @@
+# Keeps working files out of the published site. GitHub Pages otherwise serves
+# every file in the repo, including README.md (which records modelled pipeline
+# figures that are deliberately not on the public site) and the planning notes.
+exclude:
+  - README.md
+  - SITE_UPDATE_PLAN.md
+  - NEW_CHAT_BRIEF.md
+  - PAGE_SPLIT_MAP.md
+  - README_Portfolio_System.md
+  - tools
+  - "*.py"
+  - Portfolio_Case_Study_Review_v6.xlsx
+  - "*.xlsx"
+  - "*.csv"
+  - MasterCV.md
+  - "*.md"
