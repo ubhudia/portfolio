@@ -7,7 +7,7 @@
 
 | Site | Home | Audience | Job |
 |---|---|---|---|
-| **A. Portfolio** | `ubhudia.github.io/portfolio` (this repo; **currently 404** because the repo is private, see Decisions) | Employers and recruiters, by link | Proof of work for job applications |
+| **A. Portfolio** | `ubhudia-portfolio.pages.dev` (Cloudflare Pages from this private repo) | Employers and recruiters, by link | Proof of work for job applications |
 | **B. Agency site** | `gtmdemand.com` (purchased) | Buyers of fractional CMO and agency services | Case studies, services, rates, inbound enquiries |
 
 The original audit and growth plan chat was not in the upload. Both plans are built from the brief, the split map, the live `index.html` and the decisions in this session.
@@ -24,8 +24,10 @@ The original audit and growth plan chat was not in the upload. Both plans are bu
 | 4 | Agency repo | `ubhudia/gtmdemand` (private, empty, created 20 Oct) |
 | 5 | MasterCV and the rebuild files | Rebuilt from the MasterCV Claude Doc (rev 408). `tools/build_v6.py` and `tools/Portfolio_Case_Study_Review_v6.xlsx` are in this repo, excluded from Pages. Pending your review |
 | 6 | **`ubhudia.github.io/portfolio/` returns 404** | **Cause: the repo is private.** `ubhudia/portfolio` has `has_pages: false` and its last Pages build was on 2 September, before it was made private. GitHub Pages on a private repo needs a paid plan, so Pages switched off. `gtmdemand` is private too and will hit the same limit |
+| 7 | **Hosting decision (21 Oct 2026)** | **Portfolio on Cloudflare Pages** (free, repo stays private). The agency site `gtmdemand.com` is a separate project with its own repo and a different purpose: case studies, services, fractional and agency enquiries |
+| 8 | Portfolio URL | `https://ubhudia-portfolio.pages.dev/`. `index.html` and `privacy.html` already point to it. The old `ubhudia.github.io/portfolio` address stays dead, so update any CV, LinkedIn or application link |
 
-### Fix for the 404 (choose one)
+### Fix for the 404 (options considered; Cloudflare Pages chosen)
 
 | Option | Pros | Cons | Cost |
 |---|---|---|---|
@@ -57,7 +59,7 @@ Do not add a `robots.txt` Disallow. Crawlers must fetch the page to see the noin
 
 | # | Task | Owner | Effort |
 |---|---|---|---|
-| 0 | **Restore Pages** (see the fix for the 404). Until then the site is offline | You | Low |
+| 0 | **Create the Cloudflare Pages project** (steps in the README). Until then the site is offline | You | Low |
 | 1 | Merge `claude/busy-hawking-rik0mj` into `main` so noindex and the exclude list go live. On GitHub: open the repo, click "Compare & pull request" on the banner for that branch, click "Create pull request", then "Merge pull request" | You | Low |
 | 2 | After deploy, open `/portfolio/README.md` in a browser. It should 404. If it loads, the exclude list is not applied and the modelled £ figures are public | You | Low |
 | 3 | Save the live URL to the Wayback Machine: `https://web.archive.org/save/https://ubhudia.github.io/portfolio/` (dated proof you wrote it first). Repeat after big updates | You | Low |
@@ -115,9 +117,9 @@ Target keywords from `PAGE_SPLIT_MAP.md` stay, with "gtm demand" and "go-to-mark
 
 | Step | Action | Check |
 |---|---|---|
-| 1 | Create the new repo. Add `CNAME` file containing `gtmdemand.com`. Set DNS: four A records for the apex (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) and a `www` CNAME to `ubhudia.github.io`. Enable HTTPS in Pages | Site loads on HTTPS. Confirm the IPs against GitHub's current Pages docs before setting them |
+| 1 | Repo `ubhudia/gtmdemand` exists (private). Host on **Cloudflare Pages** too, so the repo stays private without a GitHub plan. Add `gtmdemand.com` to Cloudflare (free plan), change the nameservers at the registrar to the two Cloudflare gives you, then add the domain under the Pages project's Custom domains | Site loads on HTTPS at `gtmdemand.com` |
 | 2 | Extract the 20 base64 images to `/assets/` with real extensions (12 PNG, 2 JPEG, 1 WebP, plus nav logo and 3 icons). Resize logos to 192px max long edge | No `data:image` in HTML. HTML under 0.3MB |
-| 3 | Jekyll scaffold: `_config.yml` with `url: https://gtmdemand.com` and `baseurl: ""`, layouts, header and footer includes, 6 nav links | Every link and asset resolves |
+| 3 | Jekyll scaffold: `_config.yml` with `url: https://gtmdemand.com` and `baseurl: ""`, layouts, header and footer includes, 6 nav links. Cloudflare Pages preset for Jekyll: build command `jekyll build`, output directory `_site` | Every link and asset resolves |
 | 4 | Split by `data-page`. Keep 64 cards pre-rendered | 22 pages build |
 | 5 | Convert 9 anchors. Replace the 13 hard-coded `ubhudia.github.io/portfolio` URLs with `{{ site.url }}{{ page.url }}` | `grep 'href="#'` and `grep github.io` return nothing |
 | 6 | Per-page `<title>`, description, self-referencing canonical, Open Graph | No two titles match |

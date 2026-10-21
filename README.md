@@ -157,11 +157,14 @@ Repositioning from "here is my CV, filtered" to "here is a fractional CMO servic
 
 The 62 case cards' text and tags were **not** changed, so `Portfolio_Case_Study_Review_v4.xlsx` remains in sync and did not need regenerating.
 
-## Employer portfolio, not a search site (October 2026)
+## Employer portfolio on Cloudflare Pages (October 2026)
 
-This site is now an employer-facing portfolio. The agency and fractional service site is a separate build on `gtmdemand.com`; see `SITE_UPDATE_PLAN.md`.
+This site is an employer-facing portfolio. It is hosted on **Cloudflare Pages**, not GitHub Pages, because the repo is private and GitHub Pages needs a paid plan for private repos. The agency and fractional service site is a separate build on `gtmdemand.com`; see `SITE_UPDATE_PLAN.md`.
 
-- `index.html` and `privacy.html` carry `<meta name="robots" content="noindex, nofollow">`. Do not add a `robots.txt` Disallow: crawlers must be able to fetch the page to see the noindex.
-- `sitemap.xml` and `robots.txt` were removed because a sitemap listing noindex pages contradicts itself, and `robots.txt` inside `/portfolio/` was never read by crawlers.
-- `_config.yml` excludes working files (this README, planning notes, scripts, spreadsheets) from the published site. Pages otherwise serves every file in the repo.
-- noindex only hides the site from search. Anyone with the link can still open it.
+- Live URL: `https://ubhudia-portfolio.pages.dev/` (the Cloudflare project must be named `ubhudia-portfolio`; if it gets another name, replace that URL in `index.html` and `privacy.html`).
+- **Cloudflare settings:** production branch `main`, framework preset None, build command `mkdir -p dist && cp index.html privacy.html og-image.png _headers dist/`, build output directory `dist`.
+- The build command publishes only those four files. The README, planning notes, `tools/` and spreadsheets stay unpublished. If a new public file is added (a CV PDF, say), add it to the `cp` list.
+- `index.html` and `privacy.html` carry `<meta name="robots" content="noindex, nofollow">`, and `_headers` sends `X-Robots-Tag: noindex, nofollow`. Do not add a `robots.txt` Disallow: crawlers must fetch the page to see the noindex.
+- noindex only hides the site from search. Anyone with the link can still open it. For a password, put Cloudflare Access in front of the project.
+- `sitemap.xml`, `robots.txt` and `_config.yml` were removed. A sitemap of noindex pages contradicts itself, and the Jekyll exclude list does not apply on Cloudflare.
+- `privacy.html` names Cloudflare Pages as the host. After the first deploy, open the site in a browser, check the developer tools Application tab and confirm no cookies are set. The policy says there are none.
